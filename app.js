@@ -1,9 +1,10 @@
 console.log("hello world");
 // url pour appeler tout les posts
 const urlPosts = "http://localhost:5678/api/works";
-console.log(urlPosts);
 
-//création de l'architecture d'un post
+const urlCategories = "http://localhost:5678/api/categories";
+
+// création d'une div qui va contenir les bouttons
 
 // GET //
 //Fetch les données et les stocker dans une variable
@@ -20,9 +21,9 @@ fetch(urlPosts)
       const postElement = document.createElement("figure");
       // Création des balises
       const imageElement = document.createElement("img");
-      imageElement.src = data[i].imageUrl;
+      imageElement.src = post.imageUrl;
       const descElement = document.createElement("figcaption");
-      descElement.innerText = data[i].title;
+      descElement.innerText = post.title;
 
       // On rattache la balise figure a la section Fiches
       gallery.appendChild(postElement);
@@ -34,13 +35,33 @@ fetch(urlPosts)
   .catch((error) => {
     console.error(error);
   });
+//Mise en place des boutons
+const portfolio = document.querySelector("#portfolio");
 
-console.log(data);
+// Définition de la classe "btnDiv"
+const btnDiv = document.createElement("div");
+btnDiv.classList.add("btnDiv");
 
-// const postArchitecture = `<figure> <img src="${data[0].imageUrl} ">   </img> </figure>`;
-//Créer un post (figure) avec les données
+fetch(urlCategories)
+  .then((response) => response.json())
+  .then((apiData) => {
+    data = apiData;
+    for (let i = 0; i < data.length; i++) {
+      const categorie = data[i];
 
-// post.innerHTML = postArchitecture;
-//Incorporer des posts dans le html
+      //création d'une balise dédiée à un bouton
 
-console.log("hello");
+      const buttonElement = document.createElement("button");
+      buttonElement.innerText = categorie.name;
+
+      // Ajout du bouton dans la div "btnDiv"
+      btnDiv.appendChild(buttonElement);
+    }
+
+    // Ajout de la div "btnDiv" dans le DOM, dans la section #portfolio
+    portfolio.prepend(btnDiv);
+  });
+
+const allButtonElement = document.createElement("button");
+allButtonElement.innerText = "Tous";
+btnDiv.appendChild(allButtonElement);
