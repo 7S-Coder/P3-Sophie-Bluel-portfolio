@@ -8,7 +8,6 @@ const urlCategories = "http://localhost:5678/api/categories";
 getAllPostsByCategory("tous").then((data) => createPosts(data));
 
 // LES FONCTIONS
-
 function createPosts(data) {
   for (let i = 0; i < data.length; i++) {
     const posts = data[i];
@@ -51,6 +50,7 @@ const portfolio = document.querySelector("#portfolio");
 const btnDiv = document.createElement("div");
 btnDiv.classList.add("btnDiv");
 
+//Fetch uniquement les catégories
 fetch(urlCategories)
   .then((response) => response.json())
   .then((apiData) => {
@@ -74,23 +74,3 @@ fetch(urlCategories)
 const allButtonElement = document.createElement("button");
 allButtonElement.innerText = "Tous";
 btnDiv.appendChild(allButtonElement);
-
-//Rendre les boutons dynamique :
-// le bouton Tous doit afficher TOUT les posts
-/* allButtonElement.addEventListener("click", function () {
-  const gallery = document.querySelector(".gallery");
-  gallery.innerHTML = "";
-  allPostsPlaced();
-  allButtonElement.classList.add("active");
-}); */
-
-//En cliquant sur chaque bouton, je lui donne la classe active ou je l'enlève.
-const buttons = document.querySelectorAll(".btnDiv button");
-buttons.forEach((button) => {
-  button.addEventListener("click", function () {
-    buttons.forEach((btn) => {
-      btn.classList.remove("active");
-    });
-    this.classList.add("active");
-  });
-});
