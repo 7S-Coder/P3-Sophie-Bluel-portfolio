@@ -1,13 +1,34 @@
 // Url pour appeler tout les posts
 const urlPosts = "http://localhost:5678/api/works";
-
 // Url pour appeler les catégories
 const urlCategories = "http://localhost:5678/api/categories";
 
+const portfolio = document.querySelector("#portfolio");
+
+// Définition de la classe "btnDiv"
+const btnDiv = document.createElement("div");
+btnDiv.classList.add("btnDiv");
+
+btnDiv.addEventListener("click", function () {
+  console.log(this.button);
+});
+
 // Afficher les posts avec la catégorie tous par défault
-getAllPostsByCategory("tous").then((data) => createPosts(data));
+getAllPostsByCategory();
 
 // LES FONCTIONS
+function init() {
+  fetch(urlPosts)
+    .then((response) => response.json())
+    .then((apiData) => {
+      data = apiData;
+      createPosts(data);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}
+
 function createPosts(data) {
   for (let i = 0; i < data.length; i++) {
     const posts = data[i];
@@ -31,24 +52,23 @@ function createPosts(data) {
 
 //FILTRER les posts par leur catégories
 async function getAllPostsByCategory(category) {
+  gallery.innerHTML = "";
+  if (category === "") {
+    category = "Tous";
+  }
+
   try {
     const response = await fetch(urlPosts);
     const apiData = await response.json();
     const filteredPosts = apiData.filter((post) => post.category === category);
-    const data = apiData;
     console.log(filteredPosts);
-    return data;
+    return filteredPosts;
   } catch (error) {
     console.error(error);
   }
+
+  return (data = apiData);
 }
-
-//Mise en place des boutons
-const portfolio = document.querySelector("#portfolio");
-
-// Définition de la classe "btnDiv"
-const btnDiv = document.createElement("div");
-btnDiv.classList.add("btnDiv");
 
 //Fetch uniquement les catégories
 fetch(urlCategories)
@@ -74,3 +94,7 @@ fetch(urlCategories)
 const allButtonElement = document.createElement("button");
 allButtonElement.innerText = "Tous";
 btnDiv.appendChild(allButtonElement);
+
+// getAllPostsByCategory().then((data) => createPosts(data));
+
+init();
