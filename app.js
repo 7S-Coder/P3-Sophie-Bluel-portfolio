@@ -13,9 +13,6 @@ btnDiv.addEventListener("click", function () {
   console.log(this.button);
 });
 
-// Afficher les posts avec la catégorie tous par défault
-getAllPostsByCategory();
-
 // LES FONCTIONS
 function init() {
   fetch(urlPosts)
@@ -51,24 +48,6 @@ function createPosts(data) {
 }
 
 //FILTRER les posts par leur catégories
-async function getAllPostsByCategory(category) {
-  gallery.innerHTML = "";
-  if (category === "") {
-    category = "Tous";
-  }
-
-  try {
-    const response = await fetch(urlPosts);
-    const apiData = await response.json();
-    const filteredPosts = apiData.filter((post) => post.category === category);
-    console.log(filteredPosts);
-    return filteredPosts;
-  } catch (error) {
-    console.error(error);
-  }
-
-  return (data = apiData);
-}
 
 //Fetch uniquement les catégories
 fetch(urlCategories)
@@ -96,3 +75,5 @@ allButtonElement.innerText = "Tous";
 btnDiv.appendChild(allButtonElement);
 
 init();
+
+allButtonElement.addEventListener("click", function () {});
