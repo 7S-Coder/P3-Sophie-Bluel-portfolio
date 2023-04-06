@@ -99,7 +99,7 @@ allButtonElement.addEventListener("click", function () {
   getPosts();
   // affiche les dans la page
   createPosts(data);
-  console.log("je fonctionne");
+  console.log("Je fonctionne");
 });
 
 //selection du deuxième boutton dans les filtres, Objet
