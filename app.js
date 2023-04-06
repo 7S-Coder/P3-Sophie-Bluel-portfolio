@@ -114,9 +114,46 @@ login.addEventListener("click", function () {
   main.innerHTML = "";
 
   const loginDiv = document.createElement("div");
+
+  loginDiv.style.width = "379px";
+  loginDiv.style.marginLeft = "auto";
+  loginDiv.style.marginRight = "auto";
+  loginDiv.style.textAlign = "left";
+
   const loginTitle = document.createElement("h2");
   loginTitle.innerText = "Log In";
+  loginTitle.style.textAlign = "center";
+  loginTitle.style.marginBottom = "37px";
+
+  const formLogin = document.createElement("form");
+
+  const labelLogin1 = document.createElement("label");
+  labelLogin1.innerText = "Email";
+  labelLogin1.style.display = "block";
+  labelLogin1.style.fontFamily = "Work Sans";
+
+  const inputLogin1 = document.createElement("input");
+  inputLogin1.style.width = "379px";
+  inputLogin1.style.height = "51px";
+  inputLogin1.style.boxShadow = "0px 4px 14px rgba(0, 0, 0, 0.09)  ";
+  inputLogin1.style.marginBottom = "30px";
+
+  const labelLogin2 = document.createElement("label");
+  labelLogin2.innerText = "Mot de passe";
+  labelLogin2.style.display = "block";
+
+  const inputLogin2 = document.createElement("input");
+  inputLogin2.style.width = "379px";
+  inputLogin2.style.height = "51px";
+  inputLogin2.style.boxShadow = "0px 4px 14px rgba(0, 0, 0, 0.09)  ";
+
+  // box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 
   main.append(loginDiv);
   loginDiv.append(loginTitle);
+  loginDiv.append(formLogin);
+  formLogin.append(labelLogin1);
+  formLogin.append(inputLogin1);
+  formLogin.append(labelLogin2);
+  formLogin.append(inputLogin2);
 });
