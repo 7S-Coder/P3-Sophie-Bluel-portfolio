@@ -219,6 +219,10 @@ nav li {
   font-size: 1.2em;
 }
 
+nav li:hover {
+  cursor: pointer;
+}
+
 li:hover {
   color: #b1663c;
 }
