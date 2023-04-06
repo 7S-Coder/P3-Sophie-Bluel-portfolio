@@ -13,7 +13,12 @@ btnDiv.addEventListener("click", function () {
   console.log(this.button);
 });
 
+let data = [];
+const gallery = document.querySelector(".gallery");
+
 // LES FONCTIONS
+
+//fonction qui initialise le site
 function init() {
   fetch(urlPosts)
     .then((response) => response.json())
@@ -26,11 +31,13 @@ function init() {
     });
 }
 
+//Une fonction qui crée les posts.
+
 function createPosts(data) {
   for (let i = 0; i < data.length; i++) {
     const posts = data[i];
     // Récupération de l'élément du DOM qui accueillera les figures
-    const gallery = document.querySelector(".gallery");
+    document.querySelector(".gallery");
     // Création d’une balise dédiée à un post
     const postElement = document.createElement("figure");
     // Création des balises
@@ -45,6 +52,15 @@ function createPosts(data) {
     postElement.appendChild(imageElement);
     postElement.appendChild(descElement);
   }
+}
+
+//une fonction qui fetch tout les posts
+function getPosts() {
+  fetch(urlPosts)
+    .then((response) => response.json())
+    .then((apiData) => {
+      data = apiData;
+    });
 }
 
 //FILTRER les posts par leur catégories
@@ -76,4 +92,11 @@ btnDiv.appendChild(allButtonElement);
 
 init();
 
-allButtonElement.addEventListener("click", function () {});
+allButtonElement.addEventListener("click", function () {
+  //supprimer les posts de la gallery
+  gallery.innerHTML = "";
+  // fetch les données
+  getPosts();
+  // affiche les dans la page
+  createPosts(data);
+});
