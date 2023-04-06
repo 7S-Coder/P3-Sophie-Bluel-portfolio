@@ -161,6 +161,7 @@ login.addEventListener("click", function () {
   buttonLogin.style.borderRadius = "60px";
   buttonLogin.style.color = "white";
   buttonLogin.style.fontFamily = "Syne";
+  buttonLogin.style.border = "0px";
 
   const linkSpan = document.createElement("a");
   linkSpan.style.display = "flex";
