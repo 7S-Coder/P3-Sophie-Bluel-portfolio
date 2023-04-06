@@ -165,14 +165,13 @@ login.addEventListener("click", function () {
 
   const linkSpan = document.createElement("a");
   linkSpan.style.display = "flex";
-  linkSpan.style.width = "379px";
   linkSpan.style.justifyContent = "center";
   linkSpan.style.color = "black";
   linkSpan.href = "";
+  linkSpan.style.marginTop = "28px";
 
   const spanLogin = document.createElement("span");
   spanLogin.textContent = "Mot de passe oublié ?";
-  spanLogin.style.marginTop = "28px";
 
   main.append(loginDiv);
   loginDiv.append(loginTitle);
