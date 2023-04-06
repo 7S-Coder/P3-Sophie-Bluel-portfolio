@@ -135,7 +135,6 @@ login.addEventListener("click", function () {
   const inputLogin1 = document.createElement("input");
   inputLogin1.style.width = "379px";
   inputLogin1.style.height = "51px";
-  inputLogin1.style.boxShadow = "0px 4px 14px rgba(0, 0, 0, 0.09)  ";
   inputLogin1.style.marginBottom = "30px";
 
   const labelLogin2 = document.createElement("label");
@@ -145,7 +144,6 @@ login.addEventListener("click", function () {
   const inputLogin2 = document.createElement("input");
   inputLogin2.style.width = "379px";
   inputLogin2.style.height = "51px";
-  inputLogin2.style.boxShadow = "0px 4px 14px rgba(0, 0, 0, 0.09)  ";
 
   // box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 
