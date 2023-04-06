@@ -95,6 +95,4 @@ const allButtonElement = document.createElement("button");
 allButtonElement.innerText = "Tous";
 btnDiv.appendChild(allButtonElement);
 
-// getAllPostsByCategory().then((data) => createPosts(data));
-
 init();
