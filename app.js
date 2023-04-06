@@ -103,3 +103,20 @@ allButtonElement.addEventListener("click", function () {
 });
 
 //selection du deuxième boutton dans les filtres, Objet
+
+//page login
+const main = document.querySelector("main");
+
+const ulNav = document.querySelector("header nav ul");
+const login = ulNav.children[2];
+
+login.addEventListener("click", function () {
+  main.innerHTML = "";
+
+  const loginDiv = document.createElement("div");
+  const loginTitle = document.createElement("h2");
+  loginTitle.innerText = "Log In";
+
+  main.append(loginDiv);
+  loginDiv.append(loginTitle);
+});
