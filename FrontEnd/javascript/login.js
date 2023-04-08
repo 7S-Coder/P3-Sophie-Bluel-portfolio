@@ -1,4 +1,3 @@
-//page login
 const main = document.querySelector("main");
 
 const ulNav = document.querySelector("header nav ul");
@@ -79,3 +78,7 @@ login.addEventListener("click", function () {
   loginDiv.append(linkSpan);
   linkSpan.append(spanLogin);
 });
+
+/* buttonLogin.addEventListener("click", function () {
+    if (inputLogin1.value === "random" && inputLogin2.value === "random")
+}); */
