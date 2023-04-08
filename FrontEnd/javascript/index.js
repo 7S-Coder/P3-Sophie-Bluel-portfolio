@@ -64,21 +64,14 @@ function getPosts() {
 }
 
 //FILTRER les posts par leur catégories
-async function getAllPostsByCategory(category) {
-  if (category === "") {
-    category = "Tous";
-  }
+async function getAllPostsByCategory(category = "") {
+  const response = await fetch(urlPosts);
+  const apiData = await response.json();
 
-  try {
-    const response = await fetch(urlPosts);
-    const apiData = await response.json();
-    const filteredPosts = apiData.filter(
-      (post) => post.category.name === category
-    );
-    console.log(filteredPosts);
-    return filteredPosts;
-  } catch (error) {
-    console.error(error);
+  if (category) {
+    return apiData.filter((post) => post.category.name === category);
+  } else {
+    return apiData;
   }
 }
 
