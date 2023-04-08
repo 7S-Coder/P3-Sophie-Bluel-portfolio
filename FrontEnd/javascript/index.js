@@ -94,13 +94,10 @@ fetch(urlCategories)
 
     // sélection du deuxième bouton dans les filtres, Objet
     const objectButton = btnDiv.querySelector(".Objets");
-    console.log(objectButton);
 
     const appartButton = btnDiv.querySelector(".Appartements");
-    console.log(appartButton);
 
     const hiltonButton = btnDiv.querySelector(".Hotels");
-    console.log(hiltonButton);
 
     objectButton.addEventListener("click", async function () {
       gallery.innerHTML = "";
@@ -134,7 +131,4 @@ allButtonElement.addEventListener("click", function () {
   getPosts();
   // affiche les dans la page
   createPosts(data);
-  console.log("Je fonctionne");
 });
-
-//selection du deuxième boutton dans les filtres, Objet
