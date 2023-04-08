@@ -67,11 +67,12 @@ function getPosts() {
 async function getAllPostsByCategory(category = "") {
   const response = await fetch(urlPosts);
   const apiData = await response.json();
+  const data = apiData;
 
   if (category) {
-    return apiData.filter((post) => post.category.name === category);
+    return data.filter((post) => post.category.name === category);
   } else {
-    return apiData;
+    return data;
   }
 }
 
