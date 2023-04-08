@@ -5,15 +5,11 @@ const urlCategories = "http://localhost:5678/api/categories";
 
 const portfolio = document.querySelector("#portfolio");
 
+let data = [];
 // Définition de la classe "btnDiv"
 const btnDiv = document.createElement("div");
 btnDiv.classList.add("btnDiv");
 
-btnDiv.addEventListener("click", function () {
-  console.log(this.button);
-});
-
-let data = [];
 const gallery = document.querySelector(".gallery");
 
 // LES FONCTIONS
@@ -85,9 +81,9 @@ fetch(urlCategories)
       const categorie = data[i];
 
       //création d'une balise dédiée à un bouton
-
       const buttonElement = document.createElement("button");
       buttonElement.innerText = categorie.name;
+      buttonElement.classList = categorie.name;
 
       // Ajout du bouton dans la div "btnDiv"
       btnDiv.appendChild(buttonElement);
@@ -95,6 +91,34 @@ fetch(urlCategories)
 
     // Ajout de la div "btnDiv" dans le DOM, dans la section #portfolio
     portfolio.prepend(btnDiv);
+
+    // sélection du deuxième bouton dans les filtres, Objet
+    const objectButton = btnDiv.querySelector(".Objets");
+    console.log(objectButton);
+
+    const appartButton = btnDiv.querySelector(".Appartements");
+    console.log(appartButton);
+
+    const hiltonButton = btnDiv.querySelector(".Hotels");
+    console.log(hiltonButton);
+
+    objectButton.addEventListener("click", async function () {
+      gallery.innerHTML = "";
+      const filteredData = await getAllPostsByCategory("Objets");
+      createPosts(filteredData);
+    });
+
+    appartButton.addEventListener("click", async function () {
+      gallery.innerHTML = "";
+      const filteredData = await getAllPostsByCategory("Appartements");
+      createPosts(filteredData);
+    });
+
+    hiltonButton.addEventListener("click", async function () {
+      gallery.innerHTML = "";
+      const filteredData = await getAllPostsByCategory("Hotels & restaurants");
+      createPosts(filteredData);
+    });
   });
 
 const allButtonElement = document.createElement("button");
