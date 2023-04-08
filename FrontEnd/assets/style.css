@@ -169,6 +169,10 @@ h1 > span {
 }
 
 /* Mon CSS */
+header a {
+  text-decoration: none;
+}
+
 .btnDiv {
   display: flex;
   justify-content: center;
