@@ -80,5 +80,5 @@ login.addEventListener("click", function () {
 });
 
 /* buttonLogin.addEventListener("click", function () {
-    if (inputLogin1.value === "random" && inputLogin2.value === "random")
+    appeler le back pour qu'il me donne le token, et l'enregistrer dans le localstorage
 }); */

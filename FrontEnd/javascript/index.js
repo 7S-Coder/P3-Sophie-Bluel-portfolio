@@ -64,6 +64,23 @@ function getPosts() {
 }
 
 //FILTRER les posts par leur catégories
+async function getAllPostsByCategory(category) {
+  if (category === "") {
+    category = "Tous";
+  }
+
+  try {
+    const response = await fetch(urlPosts);
+    const apiData = await response.json();
+    const filteredPosts = apiData.filter(
+      (post) => post.category.name === category
+    );
+    console.log(filteredPosts);
+    return filteredPosts;
+  } catch (error) {
+    console.error(error);
+  }
+}
 
 //Fetch uniquement les catégories
 fetch(urlCategories)
