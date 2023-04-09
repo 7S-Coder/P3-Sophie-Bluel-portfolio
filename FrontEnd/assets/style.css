@@ -205,7 +205,8 @@ form > input:hover {
 }
 
 .btnDiv button:hover,
-nav li:hover {
+nav li:hover,
+section img {
   cursor: pointer;
 }
 
@@ -274,6 +275,10 @@ li:hover {
 
 .gallery img {
   width: 100%;
+}
+
+.gallery img:hover {
+  border: 1px solid #fffef8;
 }
 
 #contact {

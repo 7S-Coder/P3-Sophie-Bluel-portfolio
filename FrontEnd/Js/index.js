@@ -92,7 +92,6 @@ fetch(urlCategories)
     // Ajout de la div "btnDiv" dans le DOM, dans la section #portfolio
     portfolio.prepend(btnDiv);
 
-    // sélection du deuxième bouton dans les filtres, Objet
     const objectButton = btnDiv.querySelector(".Objets");
 
     const appartButton = btnDiv.querySelector(".Appartements");
