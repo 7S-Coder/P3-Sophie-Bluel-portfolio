@@ -123,11 +123,11 @@ btnDiv.appendChild(allButtonElement);
 
 init();
 
-allButtonElement.addEventListener("click", function () {
+allButtonElement.addEventListener("click", () => {
   //supprimer les posts de la gallery
   gallery.innerHTML = "";
   // fetch les données
-  getPosts();
+  const filteredData = getAllPostsByCategory("Tous");
   // affiche les dans la page
   createPosts(data);
 });

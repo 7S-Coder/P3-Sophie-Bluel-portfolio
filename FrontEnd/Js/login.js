@@ -1,9 +1,11 @@
+const urlLogin = "http://localhost:5678/api/users/login";
+
 const main = document.querySelector("main");
 
 const ulNav = document.querySelector("header nav ul");
 const login = ulNav.children[2];
 
-login.addEventListener("click", function () {
+login.addEventListener("click", () => {
   main.innerHTML = "";
 
   const loginDiv = document.createElement("div");
@@ -20,26 +22,29 @@ login.addEventListener("click", function () {
   loginTitle.style.marginBottom = "37px";
 
   const formLogin = document.createElement("form");
+  formLogin.id = "login";
+  formLogin.name = "login";
+  formLogin.method = "POST";
 
-  const labelLogin1 = document.createElement("label");
-  labelLogin1.innerText = "Email";
-  labelLogin1.style.display = "block";
-  labelLogin1.style.fontFamily = "Work Sans";
-  labelLogin1.style.marginBottom = "7px";
+  const labelEmail = document.createElement("label");
+  labelEmail.innerText = "Email";
+  labelEmail.style.display = "block";
+  labelEmail.style.fontFamily = "Work Sans";
+  labelEmail.style.marginBottom = "7px";
 
-  const inputLogin1 = document.createElement("input");
-  inputLogin1.style.width = "379px";
-  inputLogin1.style.height = "51px";
-  inputLogin1.style.marginBottom = "30px";
+  const inputEmail = document.createElement("input");
+  inputEmail.style.width = "379px";
+  inputEmail.style.height = "51px";
+  inputEmail.style.marginBottom = "30px";
 
-  const labelLogin2 = document.createElement("label");
-  labelLogin2.innerText = "Mot de passe";
-  labelLogin2.style.display = "block";
-  labelLogin2.style.marginBottom = "7px";
+  const labelPassword = document.createElement("label");
+  labelPassword.innerText = "Mot de passe";
+  labelPassword.style.display = "block";
+  labelPassword.style.marginBottom = "7px";
 
-  const inputLogin2 = document.createElement("input");
-  inputLogin2.style.width = "379px";
-  inputLogin2.style.height = "51px";
+  const inputPassword = document.createElement("input");
+  inputPassword.style.width = "379px";
+  inputPassword.style.height = "51px";
 
   const buttonBox = document.createElement("div");
   buttonBox.style.display = "flex";
@@ -66,17 +71,46 @@ login.addEventListener("click", function () {
   const spanLogin = document.createElement("span");
   spanLogin.textContent = "Mot de passe oublié ?";
 
+  const error = document.createElement("span");
+  error.style.color = "red";
+
   main.append(loginDiv);
   loginDiv.append(loginTitle);
   loginDiv.append(formLogin);
-  formLogin.append(labelLogin1);
-  formLogin.append(inputLogin1);
-  formLogin.append(labelLogin2);
-  formLogin.append(inputLogin2);
+  formLogin.append(labelEmail);
+  formLogin.append(inputEmail);
+  formLogin.append(labelPassword);
+  formLogin.append(inputPassword);
   formLogin.append(buttonBox);
   buttonBox.append(buttonLogin);
   loginDiv.append(linkSpan);
   linkSpan.append(spanLogin);
+  formLogin.append(error);
+
+  //initialisation des variables du compte
+  let email = "sophie.bluel@test.tld";
+  let password = "S0phie";
+
+  formLogin.addEventListener("submit", (e) => {
+    //contrôle si les champs sont vide
+    if (inputEmail.value.trim() === "" || inputPassword.value.trim() === "") {
+      e.preventDefault();
+      error.innerText = "Les champs ne peuvent être vide.";
+    } else if (
+      inputEmail.value.trim() !== email ||
+      inputPassword.value.trim() !== password
+    ) {
+      e.preventDefault();
+      error.innerText = "L'email ou le mot est passe est incorrect.";
+    } else {
+      fetch(urlLogin)
+        .then((response) => response.json())
+        .then((apiData) => {
+          data = apiData;
+          sessionStorage.setItem(data);
+        });
+    }
+  });
 });
 
 /* buttonLogin.addEventListener("click", function () {

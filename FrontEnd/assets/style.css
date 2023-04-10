@@ -195,7 +195,8 @@ header a {
   font-size: 16px;
 }
 
-.active {
+.actif,
+.btnDiv button:hover {
   background-color: #1d6154;
   color: white;
 }
