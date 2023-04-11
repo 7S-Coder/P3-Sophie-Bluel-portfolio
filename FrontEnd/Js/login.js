@@ -104,26 +104,26 @@ login.addEventListener("click", () => {
       e.preventDefault();
       error.innerText = "L'email ou le mot est passe est incorrect.";
     } else {
-      // e.preventDefault();
-      // setTimeout(() => {
-      //   fetch(urlLogin, {
-      //     method: "POST",
-      //     body: JSON.stringify({
-      //       email: inputEmail.value.trim(),
-      //       password: inputPassword.value.trim(),
-      //     }),
-      //     headers: {
-      //       "content-type": "application/json; charset=UTF-8",
-      //     },
-      //   })
-      //     .then((response) => response.json())
-      //     .then((apiData) => {
-      //       data = apiData;
-      //       console.log("good");
-      //       // sessionStorage.setItem(data);
-      //       // console.log(`${data.user.Id}`, `${data.token}`);
-      //     });
-      // }, "3000");
+      e.preventDefault();
+      setTimeout(() => {
+        fetch(urlLogin, {
+          method: "POST",
+          body: JSON.stringify({
+            email: inputEmail.value.trim(),
+            password: inputPassword.value.trim(),
+          }),
+          headers: {
+            "content-type": "application/json; charset=UTF-8",
+          },
+        })
+          .then((response) => response.json())
+          .then((apiData) => {
+            data = apiData;
+            console.log("good");
+            // sessionStorage.setItem(data);
+            // console.log(`${data.user.Id}`, `${data.token}`);
+          });
+      }, 3000);
     }
   });
 });
