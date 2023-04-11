@@ -5,6 +5,14 @@ const main = document.querySelector("main");
 const ulNav = document.querySelector("header nav ul");
 const login = ulNav.children[2];
 
+fetch(urlLogin)
+  .then((response) => response.json())
+  .then((apiData) => {
+    data = apiData;
+    // sessionStorage.setItem(data);
+    console.log(data);
+  });
+
 login.addEventListener("click", () => {
   main.innerHTML = "";
 
@@ -25,6 +33,7 @@ login.addEventListener("click", () => {
   formLogin.id = "login";
   formLogin.name = "login";
   formLogin.method = "POST";
+  formLogin.action = "";
 
   const labelEmail = document.createElement("label");
   labelEmail.innerText = "Email";
@@ -107,12 +116,9 @@ login.addEventListener("click", () => {
         .then((response) => response.json())
         .then((apiData) => {
           data = apiData;
-          sessionStorage.setItem(data);
+          // sessionStorage.setItem(data);
+          console.log(`${data.user.Id}`, `${data.token}`);
         });
     }
   });
 });
-
-/* buttonLogin.addEventListener("click", function () {
-    appeler le back pour qu'il me donne le token, et l'enregistrer dans le localstorage
-}); */

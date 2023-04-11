@@ -278,8 +278,12 @@ li:hover {
   width: 100%;
 }
 
-.gallery img:hover {
-  border: 1px solid #fffef8;
+.gallery figure:hover {
+  background-color: #1d6154;
+  border-bottom-right-radius: 15px;
+  width: 101%;
+  color: white;
+  transition: 1000ms;
 }
 
 #contact {
