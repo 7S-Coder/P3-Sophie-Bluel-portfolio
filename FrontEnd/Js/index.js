@@ -52,11 +52,13 @@ function createPosts(data) {
 
 //une fonction qui fetch tout les posts
 function getPosts() {
-  fetch(urlPosts)
-    .then((response) => response.json())
-    .then((apiData) => {
-      data = apiData;
-    });
+  setTimeout(() => {
+    fetch(urlPosts)
+      .then((response) => response.json())
+      .then((apiData) => {
+        data = apiData;
+      });
+  }, "3000");
 }
 
 //FILTRER les posts par leur catégories
@@ -73,6 +75,7 @@ async function getAllPostsByCategory(category = "") {
 }
 
 //Fetch uniquement les catégories
+
 fetch(urlCategories)
   .then((response) => response.json())
   .then((apiData) => {
