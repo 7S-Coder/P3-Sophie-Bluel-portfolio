@@ -195,11 +195,20 @@ header a {
   font-size: 16px;
 }
 
-.actif,
+.btnDiv button:focus {
+  background-color: #1d6154;
+  color: white;
+}
+
 .btnDiv button:hover {
   background-color: #1d6154;
   color: white;
 }
+
+/* .actif:active {
+  background-color: #1d6154;
+  color: white;
+} */
 
 form > input:hover {
   box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);

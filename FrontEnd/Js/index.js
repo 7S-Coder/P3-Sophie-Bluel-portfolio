@@ -52,13 +52,11 @@ function createPosts(data) {
 
 //une fonction qui fetch tout les posts
 function getPosts() {
-  setTimeout(() => {
-    fetch(urlPosts)
-      .then((response) => response.json())
-      .then((apiData) => {
-        data = apiData;
-      });
-  }, "3000");
+  fetch(urlPosts)
+    .then((response) => response.json())
+    .then((apiData) => {
+      data = apiData;
+    });
 }
 
 //FILTRER les posts par leur catégories
