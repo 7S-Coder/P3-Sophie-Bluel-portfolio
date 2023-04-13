@@ -88,42 +88,30 @@ login.addEventListener("click", () => {
   formLogin.append(error);
 
   //initialisation des variables du compte
-  let email = "sophie.bluel@test.tld";
-  let password = "S0phie";
 
-  formLogin.addEventListener("submit", (e) => {
+  buttonLogin.addEventListener("click", (e) => {
     console.log("Je passe ici");
     //contrôle si les champs sont vide
-    if (inputEmail.value.trim() === "" || inputPassword.value.trim() === "") {
-      e.preventDefault();
-      error.innerText = "Les champs ne peuvent être vide.";
-    } else if (
-      inputEmail.value.trim() !== email ||
-      inputPassword.value.trim() !== password
-    ) {
-      e.preventDefault();
-      error.innerText = "L'email ou le mot est passe est incorrect.";
-    } else {
-      console.log("je passe");
 
-      fetch(urlLogin, {
-        method: "POST",
-        body: {
-          email: inputEmail.value.trim(),
-          password: inputPassword.value.trim(),
-        },
-        headers: {
-          accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        mode: "cors",
-      })
-        .then((response) => response.json())
-        .then((apiData) => {
-          // sessionStorage(apiData);
-          console.log("Bonjour");
-        });
-      e.preventDefault();
-    }
+    console.log("je passe");
+
+    fetch(urlLogin, {
+      method: "POST",
+      body: {
+        email: inputEmail.value.trim(),
+        password: inputPassword.value.trim(),
+      },
+      headers: {
+        accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      mode: "cors",
+    })
+      .then((response) => response.json())
+      .then((apiData) => {
+        // sessionStorage(apiData);
+        console.log("Bonjour");
+      });
+    e.preventDefault();
   });
 });

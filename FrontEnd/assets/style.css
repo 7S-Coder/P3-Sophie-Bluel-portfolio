@@ -195,12 +195,9 @@ header a {
   font-size: 16px;
 }
 
-.btnDiv button:focus {
-  background-color: #1d6154;
-  color: white;
-}
-
-.btnDiv button:hover {
+.btnDiv button:focus,
+.btnDiv button:hover,
+.actif {
   background-color: #1d6154;
   color: white;
 }

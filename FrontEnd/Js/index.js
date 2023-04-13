@@ -120,6 +120,7 @@ fetch(urlCategories)
 
 const allButtonElement = document.createElement("button");
 allButtonElement.innerText = "Tous";
+allButtonElement.classList.add = "actif";
 btnDiv.appendChild(allButtonElement);
 
 init();
