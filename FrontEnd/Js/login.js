@@ -91,7 +91,12 @@ login.addEventListener("click", () => {
 
   //initialisation des variables du compte
 
-  buttonLogin.addEventListener("click", () => {
+  buttonLogin.addEventListener("click", (e) => {
+    console.log("Je passe ici");
+    //contrôle si les champs sont vide
+
+    console.log("je passe");
+
     fetch(urlLogin, {
       method: "POST",
       body: JSON.stringify({
@@ -106,8 +111,12 @@ login.addEventListener("click", () => {
     })
       .then((response) => response.json())
       .then((apiData) => {
+        // sessionStorage(apiData);
+        console.log(apiData);
         localStorage.setItem("userId", `${apiData.userId}`);
         localStorage.setItem("token", `${apiData.token}`);
       });
+    e.preventDefault();
+    console.log("je passe la aussi");
   });
 });
