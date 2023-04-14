@@ -120,7 +120,6 @@ fetch(urlCategories)
 
 const allButtonElement = document.createElement("button");
 allButtonElement.innerText = "Tous";
-allButtonElement.classList.add = "actif";
 btnDiv.appendChild(allButtonElement);
 
 init();
@@ -129,7 +128,7 @@ allButtonElement.addEventListener("click", () => {
   //supprimer les posts de la gallery
   gallery.innerHTML = "";
   // fetch les données
-  const filteredData = getAllPostsByCategory("Tous");
+  getAllPostsByCategory("Tous");
   // affiche les dans la page
   createPosts(data);
 });

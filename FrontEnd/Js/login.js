@@ -33,6 +33,7 @@ const inputEmail = document.createElement("input");
 inputEmail.style.width = "379px";
 inputEmail.style.height = "51px";
 inputEmail.style.marginBottom = "30px";
+inputEmail.type = "email";
 
 const labelPassword = document.createElement("label");
 labelPassword.innerText = "Mot de passe";
@@ -42,6 +43,7 @@ labelPassword.style.marginBottom = "7px";
 const inputPassword = document.createElement("input");
 inputPassword.style.width = "379px";
 inputPassword.style.height = "51px";
+inputPassword.type = "password";
 
 const buttonBox = document.createElement("div");
 buttonBox.style.display = "flex";
@@ -89,18 +91,13 @@ login.addEventListener("click", () => {
 
   //initialisation des variables du compte
 
-  buttonLogin.addEventListener("click", (e) => {
-    console.log("Je passe ici");
-    //contrôle si les champs sont vide
-
-    console.log("je passe");
-
+  buttonLogin.addEventListener("click", () => {
     fetch(urlLogin, {
       method: "POST",
-      body: {
-        email: inputEmail.value.trim(),
-        password: inputPassword.value.trim(),
-      },
+      body: JSON.stringify({
+        email: inputEmail.value,
+        password: inputPassword.value,
+      }),
       headers: {
         accept: "application/json",
         "Content-Type": "application/json",
@@ -109,9 +106,8 @@ login.addEventListener("click", () => {
     })
       .then((response) => response.json())
       .then((apiData) => {
-        // sessionStorage(apiData);
-        console.log("Bonjour");
+        localStorage.setItem("userId", `${apiData.userId}`);
+        localStorage.setItem("token", `${apiData.token}`);
       });
-    e.preventDefault();
   });
 });
