@@ -7,6 +7,8 @@ const login = ulNav.children[2];
 
 const loginDiv = document.createElement("div");
 
+let message = document.createElement("span");
+
 loginDiv.style.width = "379px";
 loginDiv.style.height = "78vh";
 loginDiv.style.marginLeft = "auto";
@@ -85,9 +87,11 @@ login.addEventListener("click", () => {
   buttonBox.append(buttonLogin);
   loginDiv.append(linkSpan);
   linkSpan.append(spanLogin);
+  formLogin.append(message);
 
   buttonLogin.addEventListener("click", (e) => {
     e.preventDefault();
+    console.log("bebe");
 
     fetch(urlLogin, {
       method: "POST",
@@ -109,17 +113,17 @@ login.addEventListener("click", () => {
         return response.json();
       })
       .then((apiData) => {
+        message.style.color = "green";
+        message.textContent = `Bonjour ${inputEmail.value}`;
+        // formLogin.append(message);
         localStorage.setItem("userId", `${apiData.userId}`);
         localStorage.setItem("token", `${apiData.token}`);
       })
       .catch((error) => {
         console.error("Error:", error); // Afficher l'erreur dans la console
-        // Créer un élément HTML pour afficher le message d'erreur à l'utilisateur
-        let errorMessage = document.createElement("span");
-        errorMessage.style.color = "red";
-        errorMessage.textContent =
-          "l'identifiant ou le mot de passe est incorrect";
-        formLogin.append(errorMessage);
+        message.style.color = "red";
+        message.textContent = "l'identifiant ou le mot de passe est incorrect";
+        // formLogin.append(message);
       });
   });
 });
