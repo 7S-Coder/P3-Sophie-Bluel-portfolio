@@ -117,15 +117,13 @@ login.addEventListener("click", () => {
       .then((apiData) => {
         message.style.color = "#1d6154";
         message.textContent = `Bonjour ${inputEmail.value}`;
-        // formLogin.append(message);
         localStorage.setItem("userId", `${apiData.userId}`);
         localStorage.setItem("token", `${apiData.token}`);
       })
       .catch((error) => {
-        console.error("Error:", error); // Afficher l'erreur dans la console
+        console.error("Error:", error);
         message.style.color = "red";
         message.textContent = "L'identifiant ou le mot de passe est incorrect";
-        // formLogin.append(message);
       });
   });
 });
