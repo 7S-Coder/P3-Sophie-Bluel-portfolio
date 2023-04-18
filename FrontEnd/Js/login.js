@@ -8,6 +8,8 @@ const login = ulNav.children[2];
 const loginDiv = document.createElement("div");
 
 let message = document.createElement("span");
+message.style.fontSize = "24px";
+message.style.paddingBottom = "5px";
 
 loginDiv.style.width = "379px";
 loginDiv.style.height = "78vh";
@@ -87,7 +89,7 @@ login.addEventListener("click", () => {
   buttonBox.append(buttonLogin);
   loginDiv.append(linkSpan);
   linkSpan.append(spanLogin);
-  formLogin.append(message);
+  formLogin.prepend(message);
 
   buttonLogin.addEventListener("click", (e) => {
     e.preventDefault();
@@ -113,7 +115,7 @@ login.addEventListener("click", () => {
         return response.json();
       })
       .then((apiData) => {
-        message.style.color = "green";
+        message.style.color = "#1d6154";
         message.textContent = `Bonjour ${inputEmail.value}`;
         // formLogin.append(message);
         localStorage.setItem("userId", `${apiData.userId}`);
@@ -122,7 +124,7 @@ login.addEventListener("click", () => {
       .catch((error) => {
         console.error("Error:", error); // Afficher l'erreur dans la console
         message.style.color = "red";
-        message.textContent = "l'identifiant ou le mot de passe est incorrect";
+        message.textContent = "L'identifiant ou le mot de passe est incorrect";
         // formLogin.append(message);
       });
   });
