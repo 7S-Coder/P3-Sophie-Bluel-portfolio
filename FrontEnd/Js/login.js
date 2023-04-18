@@ -51,6 +51,7 @@ buttonBox.style.justifyContent = "center";
 
 const buttonLogin = document.createElement("button");
 buttonLogin.innerText = "Se connecter";
+buttonLogin.type = "submit";
 buttonLogin.style.marginTop = "37px";
 buttonLogin.style.backgroundColor = "#1d6154";
 buttonLogin.style.width = "179px";
@@ -70,9 +71,6 @@ linkSpan.style.marginTop = "28px";
 const spanLogin = document.createElement("span");
 spanLogin.textContent = "Mot de passe oublié ?";
 
-const error = document.createElement("span");
-error.style.color = "red";
-
 login.addEventListener("click", () => {
   main.innerHTML = "";
 
@@ -87,15 +85,9 @@ login.addEventListener("click", () => {
   buttonBox.append(buttonLogin);
   loginDiv.append(linkSpan);
   linkSpan.append(spanLogin);
-  formLogin.append(error);
-
-  //initialisation des variables du compte
 
   buttonLogin.addEventListener("click", (e) => {
-    console.log("Je passe ici");
-    //contrôle si les champs sont vide
-
-    console.log("je passe");
+    e.preventDefault();
 
     fetch(urlLogin, {
       method: "POST",
@@ -109,14 +101,25 @@ login.addEventListener("click", () => {
       },
       mode: "cors",
     })
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(response);
+        }
+
+        return response.json();
+      })
       .then((apiData) => {
-        // sessionStorage(apiData);
-        console.log(apiData);
         localStorage.setItem("userId", `${apiData.userId}`);
         localStorage.setItem("token", `${apiData.token}`);
+      })
+      .catch((error) => {
+        console.error("Error:", error); // Afficher l'erreur dans la console
+        // Créer un élément HTML pour afficher le message d'erreur à l'utilisateur
+        let errorMessage = document.createElement("span");
+        errorMessage.style.color = "red";
+        errorMessage.textContent =
+          "l'identifiant ou le mot de passe est incorrect";
+        formLogin.append(errorMessage);
       });
-    e.preventDefault();
-    console.log("je passe la aussi");
   });
 });
