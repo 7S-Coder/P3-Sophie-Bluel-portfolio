@@ -207,6 +207,7 @@ form > input:hover {
 
 .btnDiv button:hover,
 nav li:hover,
+form button:hover,
 section img {
   cursor: pointer;
 }

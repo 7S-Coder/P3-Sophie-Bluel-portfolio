@@ -93,7 +93,6 @@ login.addEventListener("click", () => {
 
   buttonLogin.addEventListener("click", (e) => {
     e.preventDefault();
-    console.log("bebe");
 
     fetch(urlLogin, {
       method: "POST",
@@ -119,6 +118,7 @@ login.addEventListener("click", () => {
         message.textContent = `Bonjour ${inputEmail.value}`;
         localStorage.setItem("userId", `${apiData.userId}`);
         localStorage.setItem("token", `${apiData.token}`);
+        document.location.href = "index.html";
       })
       .catch((error) => {
         console.error("Error:", error);
