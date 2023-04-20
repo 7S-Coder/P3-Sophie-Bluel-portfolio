@@ -3,13 +3,15 @@ const urlLogin = "http://localhost:5678/api/users/login";
 const main = document.querySelector("main");
 
 const ulNav = document.querySelector("header nav ul");
-const login = ulNav.children[2];
 
 const loginDiv = document.createElement("div");
 
 let message = document.createElement("span");
 message.style.fontSize = "24px";
 message.style.paddingBottom = "5px";
+
+const login = ulNav.children[2];
+login.innerText = localStorage.getItem("token") ? "Logout" : "Login";
 
 loginDiv.style.width = "379px";
 loginDiv.style.height = "78vh";
@@ -75,6 +77,17 @@ linkSpan.style.marginTop = "28px";
 const spanLogin = document.createElement("span");
 spanLogin.textContent = "Mot de passe oublié ?";
 
+function isLogging() {
+  // Je vérifie si le token est dans le localstorage avec un booléan en réponse
+  return localStorage.getItem("token") ? true : false;
+}
+
+function logout() {
+  // Supprime le local storage et recharge la page pour afficher le bouton de connexion
+  localStorage.clear();
+  window.location.reload();
+}
+
 login.addEventListener("click", () => {
   main.innerHTML = "";
 
@@ -101,14 +114,14 @@ login.addEventListener("click", () => {
         password: inputPassword.value,
       }),
       headers: {
-        accept: "application/json",
+        Accept: "application/json",
         "Content-Type": "application/json",
       },
       mode: "cors",
     })
       .then((response) => {
         if (!response.ok) {
-          throw new Error(response);
+          throw new Error(response.statusText);
         }
 
         return response.json();
@@ -116,9 +129,10 @@ login.addEventListener("click", () => {
       .then((apiData) => {
         message.style.color = "#1d6154";
         message.textContent = `Bonjour ${inputEmail.value}`;
-        localStorage.setItem("userId", `${apiData.userId}`);
-        localStorage.setItem("token", `${apiData.token}`);
+        localStorage.setItem("userId", apiData.userId);
+        localStorage.setItem("token", apiData.token);
         document.location.href = "index.html";
+        login.innerText = "Logout";
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -126,4 +140,21 @@ login.addEventListener("click", () => {
         message.textContent = "L'identifiant ou le mot de passe est incorrect";
       });
   });
+  if (login.innerText === "Logout") {
+    logout();
+  }
 });
+
+if (localStorage.getItem("token")) {
+  const editDiv = document.createElement("div");
+  editDiv.classList.add("editDiv");
+  editDiv.style.display = "flex";
+  editDiv.style.justifyContent = "center";
+  editDiv.style.alignItems = "center";
+  editDiv.style.marginLeft = "0";
+  editDiv.style.marginRight = "0";
+  editDiv.style.height = "59px";
+  editDiv.style.backgroundColor = "black";
+
+  document.body.prepend(editDiv);
+}
