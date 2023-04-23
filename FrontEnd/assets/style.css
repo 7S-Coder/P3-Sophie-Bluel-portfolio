@@ -208,8 +208,75 @@ form > input:hover {
 .btnDiv button:hover,
 nav li:hover,
 form button:hover,
-section img {
+section img,
+a:hover,
+.buttonBox button:first-child:hover,
+.buttonBox button:nth-child(2):hover {
   cursor: pointer;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  width: 40vw;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  z-index: 1;
+}
+
+.modal-overlay {
+  display: none;
+  position: fixed;
+  top: 9px;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+}
+
+.close {
+  float: right;
+}
+
+.buttonBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  margin-top: 38px;
+}
+
+.buttonBox button:first-child {
+  color: white;
+  background-color: #1d6154;
+  border-radius: 60px;
+  width: 237px;
+  height: 36px;
+  border: none;
+}
+
+.buttonBox button:nth-child(2) {
+  margin-top: 23px;
+  color: red;
+  border: none;
+  background-color: #fff;
+}
+
+.buttonBox button:first-child,
+.buttonBox button:nth-child(2) {
+  font-family: Syne;
+  font-size: 14px;
+}
+
+.buttonBox button:nth-child(2):hover {
+  text-decoration: underline;
 }
 
 /* Fin de mon CSS */
