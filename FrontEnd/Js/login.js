@@ -40,6 +40,7 @@ inputEmail.style.width = "379px";
 inputEmail.style.height = "51px";
 inputEmail.style.marginBottom = "30px";
 inputEmail.type = "email";
+InputCSS(inputEmail);
 
 const labelPassword = document.createElement("label");
 labelPassword.innerText = "Mot de passe";
@@ -50,6 +51,7 @@ const inputPassword = document.createElement("input");
 inputPassword.style.width = "379px";
 inputPassword.style.height = "51px";
 inputPassword.type = "password";
+InputCSS(inputPassword);
 
 const buttonBox = document.createElement("div");
 buttonBox.style.display = "flex";
@@ -86,6 +88,11 @@ function logout() {
   // Supprime le local storage et recharge la page pour afficher le bouton de connexion
   localStorage.clear();
   window.location.reload();
+}
+
+function InputCSS(constElement) {
+  constElement.style.boxShadow = "0 4 14 0 rgba(0, 0, 0, 0.09)";
+  constElement.style.border = "1px solid rgba(0, 0, 0, 0.09)";
 }
 
 login.addEventListener("click", () => {
@@ -146,8 +153,12 @@ login.addEventListener("click", () => {
 });
 
 if (localStorage.getItem("token")) {
+  document.body.style.paddingTop = "21px";
   const editDiv = document.createElement("div");
   editDiv.classList.add("editDiv");
+  editDiv.style.position = "absolute";
+  editDiv.style.top = "0";
+  editDiv.style.left = "0";
   editDiv.style.display = "flex";
   editDiv.style.justifyContent = "center";
   editDiv.style.alignItems = "center";
@@ -329,8 +340,8 @@ if (localStorage.getItem("token")) {
     inputTitle.style.marginTop = "10px";
     inputTitle.style.height = "51px";
     inputTitle.style.borderRadius = "10px";
-    inputTitle.style.boxShadow = "0 4 14 0 rgba(0, 0, 0, 0.09)";
-    inputTitle.style.border = "1px solid rgba(0, 0, 0, 0.09)";
+    InputCSS(inputTitle);
+    inputTitle.style.paddingLeft = "16px";
 
     const labelCategory = document.createElement("label");
     labelCategory.innerText = "Catégorie";
@@ -341,8 +352,8 @@ if (localStorage.getItem("token")) {
     inputCategory.style.marginTop = "10px";
     inputCategory.style.height = "51px";
     inputCategory.style.borderRadius = "10px";
-    inputCategory.style.boxShadow = "0 4 14 0 rgba(0, 0, 0, 0.09)";
-    inputCategory.style.border = "1px solid rgba(0, 0, 0, 0.09)";
+    InputCSS(inputCategory);
+    inputCategory.style.paddingLeft = "16px";
 
     const validBtn = document.createElement("input");
     validBtn.innerText = "Valider";
@@ -357,6 +368,8 @@ if (localStorage.getItem("token")) {
 
     modal.appendChild(addPicturesForm);
     addPicturesForm.appendChild(h2AddPicturesForm);
+    //Insertion du bouton fermer
+
     //Insertion de la div photo
     addPicturesForm.appendChild(divPhoto);
     divPhoto.appendChild(addPhotoBtn);
