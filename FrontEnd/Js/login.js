@@ -288,7 +288,9 @@ if (localStorage.getItem("token")) {
     const addPicturesForm = document.createElement("form");
     addPicturesForm.style.display = "flex";
     addPicturesForm.style.flexDirection = "column";
-    addPicturesForm.style.margin = "0 15% 0 15%";
+    addPicturesForm.style.margin = "0 15% 32px 15%";
+    addPicturesForm.style.paddingBottom = "47px";
+    addPicturesForm.style.borderBottom = "1px solid rgba(179, 179, 179, 1)";
 
     const h2AddPicturesForm = document.createElement("h2");
     h2AddPicturesForm.textContent = "Ajout photo";
@@ -299,6 +301,8 @@ if (localStorage.getItem("token")) {
     divPhoto.style.display = "flex";
     divPhoto.style.flexDirection = "column";
     divPhoto.style.height = "169px";
+    divPhoto.style.marginTop = "36px";
+    divPhoto.style.marginBottom = "30px";
     divPhoto.style.backgroundColor = "#E8F1F6";
     divPhoto.style.alignItems = "center";
     divPhoto.style.fontFamily = "Work Sans";
@@ -307,6 +311,9 @@ if (localStorage.getItem("token")) {
     addPhotoBtn.innerText = "Ajouter photo";
     addPhotoBtn.style.height = "36px";
     addPhotoBtn.style.width = "173px";
+    addPhotoBtn.style.marginTop = "95px";
+    addPhotoBtn.style.marginBottom = "6px";
+
     addPhotoBtn.style.backgroundColor = "#CBD6DC";
     addPhotoBtn.style.borderRadius = "50px";
     addPhotoBtn.style.border = "none";
@@ -315,10 +322,52 @@ if (localStorage.getItem("token")) {
     labelPhoto.innerText = "jpg, png. 4mo max";
     labelPhoto.style.fontSize = "10px";
 
+    const labelTitle = document.createElement("label");
+    labelTitle.innerText = "Titre";
+
+    const inputTitle = document.createElement("input");
+    inputTitle.style.marginTop = "10px";
+    inputTitle.style.height = "51px";
+    inputTitle.style.borderRadius = "10px";
+    inputTitle.style.boxShadow = "0 4 14 0 rgba(0, 0, 0, 0.09)";
+    inputTitle.style.border = "1px solid rgba(0, 0, 0, 0.09)";
+
+    const labelCategory = document.createElement("label");
+    labelCategory.innerText = "Catégorie";
+    labelCategory.style.marginTop = "10px";
+
+    const inputCategory = document.createElement("input");
+    // inputCategory.type = "radio";
+    inputCategory.style.marginTop = "10px";
+    inputCategory.style.height = "51px";
+    inputCategory.style.borderRadius = "10px";
+    inputCategory.style.boxShadow = "0 4 14 0 rgba(0, 0, 0, 0.09)";
+    inputCategory.style.border = "1px solid rgba(0, 0, 0, 0.09)";
+
+    const validBtn = document.createElement("input");
+    validBtn.innerText = "Valider";
+    validBtn.type = "submit";
+    validBtn.style.position = "relative";
+    validBtn.style.left = "39%";
+    validBtn.style.color = "rgba(255, 255, 255, 1)";
+    validBtn.style.backgroundColor = "#A7A7A7";
+    validBtn.style.height = "36px";
+    validBtn.style.border = "none";
+    validBtn.style.marginBottom = "55px";
+
+    modal.appendChild(addPicturesForm);
     addPicturesForm.appendChild(h2AddPicturesForm);
+    //Insertion de la div photo
     addPicturesForm.appendChild(divPhoto);
     divPhoto.appendChild(addPhotoBtn);
     divPhoto.appendChild(labelPhoto);
-    modal.appendChild(addPicturesForm);
+    //Insertion du champ titre
+    addPicturesForm.appendChild(labelTitle);
+    addPicturesForm.appendChild(inputTitle);
+    //Insertion du champ catégorie
+    addPicturesForm.appendChild(labelCategory);
+    addPicturesForm.appendChild(inputCategory);
+    //Insertion du boutton validé
+    modal.appendChild(validBtn);
   });
 }
