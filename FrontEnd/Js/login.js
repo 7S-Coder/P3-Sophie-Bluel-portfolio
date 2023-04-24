@@ -294,16 +294,6 @@ if (localStorage.getItem("token")) {
     createModalPosts(data);
     editButton.disabled = true;
   });
-  // editButton.onclick = function (e) {
-  //   e.preventDefault();
-  //   openModal();
-  //   getAllPostsByCategory("Tous");
-  //   createModalPosts(data);
-
-  //   editButton.onclick = function (e) {
-  //     e.preventDefault();
-  //   };
-  // };
 
   const addPicturesButton = document.querySelector("#addPicturesBtn");
   addPicturesButton.addEventListener("click", () => {
