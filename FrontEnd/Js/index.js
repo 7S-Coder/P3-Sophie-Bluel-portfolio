@@ -72,6 +72,11 @@ async function getAllPostsByCategory(category = "") {
   }
 }
 
+function actifColor(constElement) {
+  constElement.style.backgroundColor = "#1d6154";
+  constElement.style.color = "white";
+}
+
 //Fetch uniquement les catégories
 
 fetch(urlCategories)
@@ -103,18 +108,21 @@ fetch(urlCategories)
       gallery.innerHTML = "";
       const filteredData = await getAllPostsByCategory("Objets");
       createPosts(filteredData);
+      // objectButton.onclick = actifColor(objectButton);
     });
 
     appartButton.addEventListener("click", async function () {
       gallery.innerHTML = "";
       const filteredData = await getAllPostsByCategory("Appartements");
       createPosts(filteredData);
+      // appartButton.onclick = actifColor(appartButton);
     });
 
     hiltonButton.addEventListener("click", async function () {
       gallery.innerHTML = "";
       const filteredData = await getAllPostsByCategory("Hotels & restaurants");
       createPosts(filteredData);
+      // hiltonButton.onclick = actifColor(hiltonButton);
     });
   });
 
@@ -131,4 +139,5 @@ allButtonElement.addEventListener("click", () => {
   getAllPostsByCategory("Tous");
   // affiche les dans la page
   createPosts(data);
+  // allButtonElement.onclick = actifColor(allButtonElement);
 });

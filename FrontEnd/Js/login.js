@@ -166,9 +166,11 @@ if (localStorage.getItem("token")) {
   editDiv.style.height = "59px";
   editDiv.style.backgroundColor = "black";
 
-  const editButton = document.createElement("a");
+  const editButton = document.createElement("button");
   editButton.innerText = "Mode édition";
+  editButton.style.backgroundColor = "black";
   editButton.style.color = "white";
+  editButton.style.border = "none";
   editButton.style.marginRight = "21px";
   editButton.style.fontFamily = "Work Sans";
 
@@ -182,9 +184,9 @@ if (localStorage.getItem("token")) {
   publishButton.style.fontFamily = "Work Sans";
 
   const iconEditLink0 = document.createElement("i");
-  iconEditLink0.classList.add("fa-sharp");
-  iconEditLink0.classList.add("fa-light");
+  iconEditLink0.classList.add("fa-solid");
   iconEditLink0.classList.add("fa-pen-to-square");
+  iconEditLink0.classList.add("fa-lg");
 
   document.body.prepend(editDiv);
   editDiv.append(editButton);
@@ -195,14 +197,14 @@ if (localStorage.getItem("token")) {
   const articleFigure = document.querySelector("#introduction article");
 
   const iconEditLink = document.createElement("i");
-  iconEditLink.classList.add("fa-sharp");
-  iconEditLink.classList.add("fa-light");
+  iconEditLink.classList.add("fa-solid");
   iconEditLink.classList.add("fa-pen-to-square");
+  iconEditLink.classList.add("fa-lg");
 
   const iconEditLink2 = document.createElement("i");
-  iconEditLink2.classList.add("fa-sharp");
-  iconEditLink2.classList.add("fa-light");
+  iconEditLink2.classList.add("fa-solid");
   iconEditLink2.classList.add("fa-pen-to-square");
+  iconEditLink2.classList.add("fa-lg");
 
   const editLink = document.createElement("a");
   editLink.innerText = "Modifier";
@@ -234,12 +236,17 @@ if (localStorage.getItem("token")) {
     document.getElementById("modal-overlay").style.display = "block";
     document.getElementById("modal").style.display = "block";
     document.body.style.overflow = "hidden";
+    editButton.style.cursor = "default";
   }
 
   function closeModal() {
     document.getElementById("modal-overlay").style.display = "none";
     document.getElementById("modal").style.display = "none";
     document.body.style.overflow = "auto";
+    editButton.disabled = false;
+    editButton.style.cursor = "pointer";
+
+    data = "";
   }
 
   function createModalPosts(data) {
@@ -280,16 +287,23 @@ if (localStorage.getItem("token")) {
     }
   }
 
-  editButton.onclick = function (e) {
+  editButton.addEventListener("click", function (e) {
     e.preventDefault();
     openModal();
     getAllPostsByCategory("Tous");
     createModalPosts(data);
+    editButton.disabled = true;
+  });
+  // editButton.onclick = function (e) {
+  //   e.preventDefault();
+  //   openModal();
+  //   getAllPostsByCategory("Tous");
+  //   createModalPosts(data);
 
-    editButton.onclick = function (e) {
-      e.preventDefault();
-    };
-  };
+  //   editButton.onclick = function (e) {
+  //     e.preventDefault();
+  //   };
+  // };
 
   const addPicturesButton = document.querySelector("#addPicturesBtn");
   addPicturesButton.addEventListener("click", () => {
