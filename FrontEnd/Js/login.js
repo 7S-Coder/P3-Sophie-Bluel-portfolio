@@ -95,6 +95,12 @@ function InputCSS(constElement) {
   constElement.style.border = "1px solid rgba(0, 0, 0, 0.09)";
 }
 
+function editIcon(constElement) {
+  constElement.classList.add("fa-solid");
+  constElement.classList.add("fa-pen-to-square");
+  constElement.classList.add("fa-lg");
+}
+
 login.addEventListener("click", () => {
   main.innerHTML = "";
 
@@ -184,9 +190,7 @@ if (localStorage.getItem("token")) {
   publishButton.style.fontFamily = "Work Sans";
 
   const iconEditLink0 = document.createElement("i");
-  iconEditLink0.classList.add("fa-solid");
-  iconEditLink0.classList.add("fa-pen-to-square");
-  iconEditLink0.classList.add("fa-lg");
+  editIcon(iconEditLink0);
 
   document.body.prepend(editDiv);
   editDiv.append(editButton);
@@ -197,14 +201,10 @@ if (localStorage.getItem("token")) {
   const articleFigure = document.querySelector("#introduction article");
 
   const iconEditLink = document.createElement("i");
-  iconEditLink.classList.add("fa-solid");
-  iconEditLink.classList.add("fa-pen-to-square");
-  iconEditLink.classList.add("fa-lg");
+  editIcon(iconEditLink);
 
   const iconEditLink2 = document.createElement("i");
-  iconEditLink2.classList.add("fa-solid");
-  iconEditLink2.classList.add("fa-pen-to-square");
-  iconEditLink2.classList.add("fa-lg");
+  editIcon(iconEditLink2);
 
   const editLink = document.createElement("a");
   editLink.innerText = "Modifier";
@@ -245,7 +245,6 @@ if (localStorage.getItem("token")) {
     document.body.style.overflow = "auto";
     editButton.disabled = false;
     editButton.style.cursor = "pointer";
-
     data = "";
   }
 

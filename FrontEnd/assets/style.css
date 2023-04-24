@@ -255,6 +255,10 @@ a:hover,
   margin-top: 38px;
 }
 
+i {
+  margin-right: 5px;
+}
+
 .buttonBox button:first-child {
   color: white;
   background-color: #1d6154;
