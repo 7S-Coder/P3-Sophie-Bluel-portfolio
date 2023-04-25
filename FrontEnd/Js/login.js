@@ -321,11 +321,18 @@ if (localStorage.getItem("token")) {
     divPhoto.style.alignItems = "center";
     divPhoto.style.fontFamily = "Work Sans";
 
+    const imgIcone = document.createElement("i");
+    imgIcone.classList.add("fa-solid");
+    imgIcone.classList.add("fa-image");
+    imgIcone.classList.add("fa-2xl");
+    imgIcone.style.color = "#b9c5cc";
+    imgIcone.style.marginTop = "50px";
+    imgIcone.style.marginBottom = "20px";
+
     const addPhotoBtn = document.createElement("button");
     addPhotoBtn.innerText = "Ajouter photo";
     addPhotoBtn.style.height = "36px";
     addPhotoBtn.style.width = "173px";
-    addPhotoBtn.style.marginTop = "95px";
     addPhotoBtn.style.marginBottom = "6px";
 
     addPhotoBtn.style.backgroundColor = "#CBD6DC";
@@ -375,6 +382,7 @@ if (localStorage.getItem("token")) {
 
     //Insertion de la div photo
     addPicturesForm.appendChild(divPhoto);
+    divPhoto.appendChild(imgIcone);
     divPhoto.appendChild(addPhotoBtn);
     divPhoto.appendChild(labelPhoto);
     //Insertion du champ titre
