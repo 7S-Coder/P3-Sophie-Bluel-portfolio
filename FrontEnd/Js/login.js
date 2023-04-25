@@ -330,10 +330,20 @@ if (localStorage.getItem("token")) {
     imgIcone.style.marginBottom = "20px";
 
     const addPhotoBtn = document.createElement("button");
+    addPhotoBtn.disabled = "true";
     addPhotoBtn.innerText = "Ajouter photo";
     addPhotoBtn.style.height = "36px";
     addPhotoBtn.style.width = "173px";
     addPhotoBtn.style.marginBottom = "6px";
+
+    const inputUnderBtn = document.createElement("input");
+    inputUnderBtn.type = "file";
+    inputUnderBtn.accept = "image/jpg, image/png";
+    inputUnderBtn.style.position = "relative";
+    inputUnderBtn.style.bottom = "33px";
+    inputUnderBtn.style.width = "158px";
+    inputUnderBtn.style.color = "rgb(203, 214, 220)";
+    inputUnderBtn.style.backgroundColor = "rgb(203, 214, 220)";
 
     addPhotoBtn.style.backgroundColor = "#CBD6DC";
     addPhotoBtn.style.borderRadius = "50px";
@@ -342,6 +352,7 @@ if (localStorage.getItem("token")) {
     const labelPhoto = document.createElement("label");
     labelPhoto.innerText = "jpg, png. 4mo max";
     labelPhoto.style.fontSize = "10px";
+    labelPhoto.style.marginBottom = "19px";
 
     const labelTitle = document.createElement("label");
     labelTitle.innerText = "Titre";
@@ -384,6 +395,7 @@ if (localStorage.getItem("token")) {
     addPicturesForm.appendChild(divPhoto);
     divPhoto.appendChild(imgIcone);
     divPhoto.appendChild(addPhotoBtn);
+    divPhoto.appendChild(inputUnderBtn);
     divPhoto.appendChild(labelPhoto);
     //Insertion du champ titre
     addPicturesForm.appendChild(labelTitle);
