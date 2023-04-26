@@ -286,6 +286,7 @@ if (localStorage.getItem("token")) {
     }
   }
 
+  /////////////////////////// modale //////////////////////////////////////
   editButton.addEventListener("click", function (e) {
     e.preventDefault();
     openModal();
@@ -299,6 +300,23 @@ if (localStorage.getItem("token")) {
     const modal = document.querySelector("#modal");
     modal.innerHTML = "";
 
+    const optionDiv = document.createElement("div");
+    optionDiv.style.display = "flex";
+    optionDiv.style.justifyContent = "space-between";
+
+    const closeOption = document.createElement("i");
+    closeOption.classList.add("fa-solid");
+    closeOption.classList.add("fa-xmark");
+    closeOption.classList.add("fa-lg");
+    closeOption.style.cursor = "pointed";
+    closeOption.addEventListener("click", function () {
+      closeModal();
+    });
+
+    const backOption = document.createElement("i");
+    backOption.classList.add("fa-solid");
+    backOption.classList.add("fa-arrow-left");
+
     const addPicturesForm = document.createElement("form");
     addPicturesForm.style.display = "flex";
     addPicturesForm.style.flexDirection = "column";
@@ -311,15 +329,15 @@ if (localStorage.getItem("token")) {
     h2AddPicturesForm.style.textAlign = "center";
     h2AddPicturesForm.style.color = "black";
 
-    const divPhoto = document.createElement("div");
-    divPhoto.style.display = "flex";
-    divPhoto.style.flexDirection = "column";
-    divPhoto.style.height = "169px";
-    divPhoto.style.marginTop = "36px";
-    divPhoto.style.marginBottom = "30px";
-    divPhoto.style.backgroundColor = "#E8F1F6";
-    divPhoto.style.alignItems = "center";
-    divPhoto.style.fontFamily = "Work Sans";
+    const photoDiv = document.createElement("div");
+    photoDiv.style.display = "flex";
+    photoDiv.style.flexDirection = "column";
+    photoDiv.style.height = "169px";
+    photoDiv.style.marginTop = "36px";
+    photoDiv.style.marginBottom = "30px";
+    photoDiv.style.backgroundColor = "#E8F1F6";
+    photoDiv.style.alignItems = "center";
+    photoDiv.style.fontFamily = "Work Sans";
 
     const imgIcone = document.createElement("i");
     imgIcone.classList.add("fa-solid");
@@ -329,40 +347,46 @@ if (localStorage.getItem("token")) {
     imgIcone.style.marginTop = "50px";
     imgIcone.style.marginBottom = "20px";
 
-    const addPhotoBtn = document.createElement("button");
-    addPhotoBtn.disabled = "true";
-    addPhotoBtn.innerText = "Ajouter photo";
-    addPhotoBtn.style.height = "36px";
-    addPhotoBtn.style.width = "173px";
-    addPhotoBtn.style.marginBottom = "6px";
+    const addPhotoLabel = document.createElement("label");
+    addPhotoLabel.name = "file";
+    addPhotoLabel.setAttribute("for", "file");
+    addPhotoLabel.innerText = "+ Ajouter photo";
+    addPhotoLabel.style.display = "flex";
+    addPhotoLabel.style.alignItems = "center";
+    addPhotoLabel.style.justifyContent = "center";
+    addPhotoLabel.style.height = "36px";
+    addPhotoLabel.style.width = "173px";
+    addPhotoLabel.style.marginBottom = "6px";
+    addPhotoLabel.style.backgroundColor = "#CBD6DC";
+    addPhotoLabel.style.borderRadius = "50px";
+    addPhotoLabel.style.border = "none";
+    addPhotoLabel.style.color = "#306685";
+    addPhotoLabel.style.cursor = "pointer";
 
     const inputUnderBtn = document.createElement("input");
+    inputUnderBtn.style.display = "none";
     inputUnderBtn.type = "file";
-    inputUnderBtn.accept = "image/jpg, image/png";
-    inputUnderBtn.style.position = "relative";
-    inputUnderBtn.style.bottom = "33px";
-    inputUnderBtn.style.width = "158px";
-    inputUnderBtn.style.color = "rgb(203, 214, 220)";
-    inputUnderBtn.style.backgroundColor = "rgb(203, 214, 220)";
-
-    addPhotoBtn.style.backgroundColor = "#CBD6DC";
-    addPhotoBtn.style.borderRadius = "50px";
-    addPhotoBtn.style.border = "none";
+    inputUnderBtn.id = "file";
+    inputUnderBtn.name = "file";
+    // inputUnderBtn.setAttribute("required", "");
 
     const labelPhoto = document.createElement("label");
     labelPhoto.innerText = "jpg, png. 4mo max";
     labelPhoto.style.fontSize = "10px";
-    labelPhoto.style.marginBottom = "19px";
+    labelPhoto.style.marginTop = "4px";
 
     const labelTitle = document.createElement("label");
     labelTitle.innerText = "Titre";
+    labelTitle.style.marginBottom = "32px";
 
     const inputTitle = document.createElement("input");
-    inputTitle.style.marginTop = "10px";
+    inputTitle.name = "title";
+    inputTitle.style.marginTop = "-21px";
     inputTitle.style.height = "51px";
     inputTitle.style.borderRadius = "10px";
     InputCSS(inputTitle);
     inputTitle.style.paddingLeft = "16px";
+    // inputTitle.setAttribute("required", "");
 
     const labelCategory = document.createElement("label");
     labelCategory.innerText = "Catégorie";
@@ -370,11 +394,13 @@ if (localStorage.getItem("token")) {
 
     const inputCategory = document.createElement("input");
     // inputCategory.type = "radio";
+    inputCategory.name = "category";
     inputCategory.style.marginTop = "10px";
     inputCategory.style.height = "51px";
     inputCategory.style.borderRadius = "10px";
     InputCSS(inputCategory);
     inputCategory.style.paddingLeft = "16px";
+    // inputCategory.setAttribute("required", "");
 
     const validBtn = document.createElement("input");
     validBtn.innerText = "Valider";
@@ -386,17 +412,28 @@ if (localStorage.getItem("token")) {
     validBtn.style.height = "36px";
     validBtn.style.border = "none";
     validBtn.style.marginBottom = "55px";
+    // if (
+    //   inputUnderBtn.value !== "" &&
+    //   inputTitle.value !== "" &&
+    //   inputCategory.value !== ""
+    // ) {
+    //   validBtn.style.backgroundColor = "#1D6154";
+    //   validBtn.style.color = "white";
+    //   validBtn.style.cursor = "pointer";
+    // }
 
     modal.appendChild(addPicturesForm);
     addPicturesForm.appendChild(h2AddPicturesForm);
-    //Insertion du bouton fermer
-
+    //Insertion de la div option
+    modal.prepend(optionDiv);
+    optionDiv.appendChild(backOption);
+    optionDiv.appendChild(closeOption);
     //Insertion de la div photo
-    addPicturesForm.appendChild(divPhoto);
-    divPhoto.appendChild(imgIcone);
-    divPhoto.appendChild(addPhotoBtn);
-    divPhoto.appendChild(inputUnderBtn);
-    divPhoto.appendChild(labelPhoto);
+    addPicturesForm.appendChild(photoDiv);
+    photoDiv.appendChild(imgIcone);
+    photoDiv.appendChild(addPhotoLabel);
+    photoDiv.appendChild(inputUnderBtn);
+    photoDiv.appendChild(labelPhoto);
     //Insertion du champ titre
     addPicturesForm.appendChild(labelTitle);
     addPicturesForm.appendChild(inputTitle);
