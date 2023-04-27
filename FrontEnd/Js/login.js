@@ -90,6 +90,45 @@ function logout() {
   window.location.reload();
 }
 
+function displayImage(e, file) {
+  const imageModal = document.querySelector("form > div");
+  const image = document.createElement("img");
+
+  const deleteButton = document.createElement("button");
+  deleteButton.innerHTML = `\u{1F5D1}`;
+  deleteButton.title = "Supprimer cette image";
+
+  image.src = e.target.result;
+  image.style.height = "169px";
+
+  imageModal.innerHTML = "";
+  imageModal.appendChild(image);
+  imageModal.appendChild(deleteButton);
+
+  deleteButton.addEventListener("click", (e) => {
+    inputUnderBtn.value = "";
+    // e.target.photoDiv.remove();
+  });
+}
+
+function previewFile() {
+  const fileExtensionRegex = /\.(jp?g|png)$/i;
+
+  if (this.files.length === 0 || !fileExtensionRegex.test(this.files[0].name)) {
+    return;
+  }
+
+  const file = this.files[0];
+
+  const fileReader = new FileReader();
+
+  fileReader.readAsDataURL(file);
+
+  fileReader.addEventListener("load", (e) => {
+    displayImage(e, file);
+  });
+}
+
 function InputCSS(constElement) {
   constElement.style.boxShadow = "0 4 14 0 rgba(0, 0, 0, 0.09)";
   constElement.style.border = "1px solid rgba(0, 0, 0, 0.09)";
@@ -220,7 +259,7 @@ if (localStorage.getItem("token")) {
   articleFigure.prepend(editLink2);
   editLink2.prepend(iconEditLink2);
 
-  const buttonCloseModal = document.querySelector("#modal button");
+  const buttonCloseModal = document.querySelector("#modal button:first-child");
   buttonCloseModal.style.backgroundColor = "white";
   buttonCloseModal.style.border = "0px";
 
@@ -316,6 +355,7 @@ if (localStorage.getItem("token")) {
     const backOption = document.createElement("i");
     backOption.classList.add("fa-solid");
     backOption.classList.add("fa-arrow-left");
+    backOption.addEventListener("click", function () {});
 
     const addPicturesForm = document.createElement("form");
     addPicturesForm.style.display = "flex";
@@ -340,7 +380,8 @@ if (localStorage.getItem("token")) {
     photoDiv.style.fontFamily = "Work Sans";
 
     const imgIcone = document.createElement("i");
-    imgIcone.classList.add("fa-solid");
+    imgIcone.classList.add("fa-sharp");
+    imgIcone.classList.add("fa-regular");
     imgIcone.classList.add("fa-image");
     imgIcone.classList.add("fa-2xl");
     imgIcone.style.color = "#b9c5cc";
@@ -364,11 +405,13 @@ if (localStorage.getItem("token")) {
     addPhotoLabel.style.cursor = "pointer";
 
     const inputUnderBtn = document.createElement("input");
+    inputUnderBtn.accept = "image/jpeg, image/png";
     inputUnderBtn.style.display = "none";
     inputUnderBtn.type = "file";
     inputUnderBtn.id = "file";
     inputUnderBtn.name = "file";
     // inputUnderBtn.setAttribute("required", "");
+    inputUnderBtn.addEventListener("change", previewFile);
 
     const labelPhoto = document.createElement("label");
     labelPhoto.innerText = "jpg, png. 4mo max";
