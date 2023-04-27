@@ -285,6 +285,11 @@ i {
   text-decoration: underline;
 }
 
+.succes {
+  background-color: #1d6154;
+  color: white;
+}
+
 /* Fin de mon CSS */
 h2 {
   font-family: "Syne";

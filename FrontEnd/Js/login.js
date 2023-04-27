@@ -106,8 +106,8 @@ function displayImage(e, file) {
   imageModal.appendChild(deleteButton);
 
   deleteButton.addEventListener("click", (e) => {
-    inputUnderBtn.value = "";
-    // e.target.photoDiv.remove();
+    // inputUnderBtn.value = "";
+    // // e.target.photoDiv.remove();
   });
 }
 
@@ -310,18 +310,54 @@ if (localStorage.getItem("token")) {
       const imageModal = document.createElement("img");
       imageModal.src = posts.imageUrl;
       imageModal.style.width = "6vw";
+      imageModal.addEventListener("mouseover", function (e) {
+        divBtn.style.visibility = "visible";
+      });
+      imageModal.addEventListener("mouseleave", function (e) {
+        divBtn.style.visibility = "hidden";
+      });
+
       const EditLinkModal = document.createElement("a");
       EditLinkModal.innerText = "éditer";
 
-      // const growingImage = document.createElement("div");
-      // growingImage.style.width = "17px";
-      // growingImage.style.height = "17px";
-      // growingImage.style.backgroundColor = "black";
+      const divBtn = document.createElement("div");
+      divBtn.style.position = "relative";
+      divBtn.style.bottom = "165px";
+      divBtn.style.left = "71px";
+      divBtn.style.visibility = "hidden";
+
+      const growingImage = document.createElement("button");
+      growingImage.title = "Grossir l'image.";
+      growingImage.style.width = "20px";
+      growingImage.style.height = "20px";
+      growingImage.style.backgroundColor = "black";
+      growingImage.style.color = "white";
+      growingImage.style.border = "none";
+      growingImage.style.marginRight = "2px";
+      growingImage.classList.add("fa-sharp");
+      growingImage.classList.add("fa-solid");
+      growingImage.classList.add("fa-arrows-up-down-left-right");
+      growingImage.classList.add("fa-xs");
+
+      const deleteImg = document.createElement("button");
+      deleteImg.title = "Supprimer l'image.";
+      deleteImg.style.width = "20px";
+      deleteImg.style.height = "20px";
+      deleteImg.style.backgroundColor = "black";
+      deleteImg.style.color = "white";
+      deleteImg.style.border = "none";
+      deleteImg.classList.add("fa-sharp");
+      deleteImg.classList.add("fa-solid");
+      deleteImg.classList.add("fa-trash");
+      deleteImg.classList.add("fa-xs");
 
       divModal.appendChild(postModal);
       postModal.appendChild(imageModal);
       // imageModal.appendChild(growingImage);
       postModal.appendChild(EditLinkModal);
+      postModal.appendChild(divBtn);
+      divBtn.appendChild(growingImage);
+      divBtn.appendChild(deleteImg);
     }
   }
 
@@ -358,6 +394,7 @@ if (localStorage.getItem("token")) {
     backOption.addEventListener("click", function () {});
 
     const addPicturesForm = document.createElement("form");
+    addPicturesForm.method = "POST";
     addPicturesForm.style.display = "flex";
     addPicturesForm.style.flexDirection = "column";
     addPicturesForm.style.margin = "0 15% 32px 15%";
@@ -447,6 +484,7 @@ if (localStorage.getItem("token")) {
 
     const validBtn = document.createElement("input");
     validBtn.innerText = "Valider";
+    validBtn.setAttribute("disabled", "true");
     validBtn.type = "submit";
     validBtn.style.position = "relative";
     validBtn.style.left = "39%";
@@ -455,15 +493,59 @@ if (localStorage.getItem("token")) {
     validBtn.style.height = "36px";
     validBtn.style.border = "none";
     validBtn.style.marginBottom = "55px";
-    // if (
-    //   inputUnderBtn.value !== "" &&
-    //   inputTitle.value !== "" &&
-    //   inputCategory.value !== ""
-    // ) {
-    //   validBtn.style.backgroundColor = "#1D6154";
-    //   validBtn.style.color = "white";
-    //   validBtn.style.cursor = "pointer";
-    // }
+
+    addPicturesForm.addEventListener("change", () => {
+      const inputs = addPicturesForm.querySelectorAll("input");
+      let isFormComplete = true;
+      inputs.forEach((input) => {
+        if (input.value.trim() === "") {
+          isFormComplete = false;
+        }
+      });
+      if (isFormComplete) {
+        console.log("tout les champs sont remplis");
+        validBtn.classList.add("succes");
+        validBtn.removeAttribute("disabled");
+        validBtn.style.backgroundColor = "#1d6154";
+        validBtn.style.color = "white";
+        validBtn.style.cursor = "pointer";
+      }
+    });
+
+    validBtn.addEventListener("click", addImg());
+
+    function addImg() {
+      const addImgUrl = "http://localhost:5678/api/works";
+
+      fetch(addImgUrl, {
+        method: "POST",
+        body: JSON.stringify({
+          image: inputUnderBtn.value,
+          category: inputCategory.value,
+          title: inputTitle.value,
+        }),
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        mode: "cors",
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(response.statusText);
+          }
+
+          return response.json();
+        })
+        .then((apiData) => {
+          console.log(apiData);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+          message.style.color = "red";
+          message.textContent = "Cette image ne peut être envoyée.";
+        });
+    }
 
     modal.appendChild(addPicturesForm);
     addPicturesForm.appendChild(h2AddPicturesForm);
