@@ -109,6 +109,7 @@ section {
 
 body {
   line-height: 1;
+  padding-top: 21px; /* rajout */
 }
 
 ol,
@@ -138,10 +139,8 @@ table {
 body {
   max-width: 1140px;
   margin: auto;
-  /* padding-top: 21px; */
   font-family: "Work Sans";
   font-size: 14px;
-  background-color: #fffef8;
 }
 
 header {
@@ -169,128 +168,6 @@ h1 > span {
   letter-spacing: 0.1em;
 }
 
-/* Mon CSS */
-header a {
-  text-decoration: none;
-}
-
-.btnDiv {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100px;
-}
-
-.btnDiv button {
-  background-color: white;
-  color: #1d6154;
-  height: 37px;
-  text-align: center;
-  border-radius: 60px;
-  border: 2px solid #1d6154;
-  padding-left: 20px;
-  padding-right: 22px;
-  margin: 10px;
-
-  font-family: "Syne";
-  font-size: 16px;
-}
-
-.btnDiv button:focus,
-.btnDiv button:hover {
-  background-color: #1d6154;
-  color: white;
-}
-
-form > input:hover {
-  box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
-}
-
-.btnDiv button:hover,
-nav li:hover,
-form button:hover,
-section img,
-body div button:hover,
-a:hover,
-.buttonBox button:first-child:hover,
-.buttonBox button:nth-child(2):hover {
-  cursor: pointer;
-}
-
-.modal {
-  display: none;
-  position: fixed;
-  width: 40vw;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-  z-index: 1;
-}
-
-.modal-overlay {
-  display: none;
-  position: fixed;
-  top: 9px;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 1;
-}
-
-.close {
-  float: right;
-}
-
-.buttonBox {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  margin-top: 38px;
-}
-
-i {
-  margin-right: 5px;
-}
-
-.buttonBox button:first-child {
-  color: white;
-  background-color: #1d6154;
-  border-radius: 60px;
-  width: 237px;
-  height: 36px;
-  border: none;
-}
-
-.buttonBox button:nth-child(2) {
-  margin-top: 23px;
-  color: red;
-  border: none;
-  background-color: #fff;
-}
-
-.buttonBox button:first-child,
-.buttonBox button:nth-child(2) {
-  font-family: Syne;
-  font-size: 14px;
-}
-
-.buttonBox button:nth-child(2):hover {
-  text-decoration: underline;
-}
-
-.succes {
-  background-color: #1d6154;
-  color: white;
-}
-
-/* Fin de mon CSS */
 h2 {
   font-family: "Syne";
   font-weight: 700;
@@ -357,14 +234,6 @@ li:hover {
   width: 100%;
 }
 
-.gallery figure:hover {
-  background-color: #1d6154;
-  border-bottom-right-radius: 15px;
-  width: 101%;
-  color: white;
-  transition: 1000ms;
-}
-
 #contact {
   width: 50%;
   margin: auto;
@@ -416,4 +285,161 @@ footer nav ul {
   display: flex;
   justify-content: flex-end;
   margin: 2em;
+}
+
+/* Mon CSS */
+.btnDiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+}
+
+.btnDiv button {
+  background-color: white;
+  color: #1d6154;
+  height: 37px;
+  text-align: center;
+  border-radius: 60px;
+  border: 2px solid #1d6154;
+  padding-left: 20px;
+  padding-right: 22px;
+  margin: 10px;
+
+  font-family: "Syne";
+  font-size: 16px;
+}
+
+.btnDiv button:focus,
+.btnDiv button:hover {
+  background-color: #1d6154;
+  color: white;
+}
+
+/* 
+document.body.style.paddingTop = "21px";
+  const editDiv = document.createElement("div");
+  editDiv.classList.add("editDiv");
+  editDiv.style.position = "absolute";
+  editDiv.style.top = "0";
+  editDiv.style.left = "0";
+  editDiv.style.display = "flex";
+  editDiv.style.justifyContent = "center";
+  editDiv.style.alignItems = "center";
+  editDiv.style.width = "100%";
+  editDiv.style.height = "59px";
+  editDiv.style.backgroundColor = "black"; */
+#editDiv {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 59px;
+  background-color: black;
+}
+
+#editButton {
+  background-color: black;
+  color: white;
+  border: none;
+  margin-right: 21px;
+}
+
+#publishButton {
+  background-color: white;
+  color: black;
+  height: 38px;
+  width: 216px;
+  border-radius: 60px;
+  border: none;
+}
+
+#editButton,
+#publishButton {
+  font-family: sans-serif;
+}
+
+.modal,
+.modal2 {
+  display: none;
+  position: fixed;
+  width: 40vw;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  z-index: 1;
+}
+
+.modal-overlay {
+  display: none;
+  position: fixed;
+  top: 9px;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+}
+
+.close {
+  float: right;
+  border: none;
+  background-color: white;
+}
+
+#modal h2 {
+  text-align: center;
+  margin-top: 36px;
+  margin-bottom: 20px;
+}
+
+.buttonBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  margin-top: 38px;
+}
+
+i {
+  margin-right: 5px;
+}
+
+.buttonBox button:first-child {
+  color: white;
+  background-color: #1d6154;
+  border-radius: 60px;
+  width: 237px;
+  height: 36px;
+  border: none;
+}
+
+.buttonBox button:nth-child(2) {
+  margin-top: 23px;
+  color: red;
+  border: none;
+  background-color: #fff;
+}
+
+.buttonBox button:first-child,
+.buttonBox button:nth-child(2) {
+  font-family: Syne;
+  font-size: 14px;
+}
+
+.buttonBox button:nth-child(2):hover {
+  text-decoration: underline;
+}
+
+.succes {
+  background-color: #1d6154;
+  color: white;
 }

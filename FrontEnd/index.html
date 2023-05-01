@@ -11,13 +11,19 @@
 		rel="stylesheet">
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/style.css">
+	<script defer src="https://kit.fontawesome.com/e2b2e6f3b0.js" crossorigin="anonymous"></script>
+	<script defer src="./js/index.js"> </script>
+	<script defer src="./js/login.js"> </script>
+	<script defer src="./js/modal.js"> </script>
 </head>
 
 <body>
+	<div id="editDiv">
+		<button id="editButton">Mode édition</button>
+		<button id="publishButton">Publier les changements</button>
+	</div>
 	<header>
-		<a href="">
-			<h1>Sophie Bluel <span>Architecte d'inteérieur</span></h1>
-		</a>
+		<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
 		<nav>
 			<ul>
 				<li>projets</li>
@@ -44,9 +50,7 @@
 			</article>
 		</section>
 		<section id="portfolio">
-
 			<h2>Mes Projets</h2>
-
 			<div class="gallery">
 
 			</div>
@@ -64,9 +68,6 @@
 				<input type="submit" value="Envoyer">
 			</form>
 		</section>
-
-
-
 		<section class="modal-overlay" id="modal-overlay" onclick="closeModal()"></section>
 		<div class="modal" id="modal">
 			<button onclick="closeModal()" class="close"><i class="fa-solid fa-xmark fa-lg"></i></button>
@@ -74,14 +75,21 @@
 			<h2>Galerie photo</h2>
 			<div></div>
 			<div class="buttonBox">
-				<button id="addPicturesBtn">
+				<button id="addPicturesBtn" onclick="openLastModal()">
 					Ajouter une photo
 				</button>
-				<button>
+				<button id=" deleteAll" onclick="deleteAllPosts(token, divModal)">
 					Supprimer la galerie
 				</button>
 			</div>
 		</div>
+
+		<section class="modal-overlay" id="modal-overlay" onclick="closeModal()"></section>
+		<div class="modal2" id="modal2">
+
+
+		</div>
+
 	</main>
 
 	<footer>
@@ -91,11 +99,6 @@
 			</ul>
 		</nav>
 	</footer>
-
-	<script src="https://kit.fontawesome.com/e2b2e6f3b0.js" crossorigin="anonymous"></script>
-	<script src="./Js/index.js"> </script>
-	<script src="./Js/login.js"> </script>
-
 </body>
 
 </html>

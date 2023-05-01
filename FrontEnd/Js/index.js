@@ -1,20 +1,14 @@
-// Url pour appeler tout les posts
 const urlPosts = "http://localhost:5678/api/works";
-// Url pour appeler les catégories
 const urlCategories = "http://localhost:5678/api/categories";
-
 const portfolio = document.querySelector("#portfolio");
-
-let data = [];
-// Définition de la classe "btnDiv"
+const gallery = document.querySelector(".gallery");
 const btnDiv = document.createElement("div");
 btnDiv.classList.add("btnDiv");
 
-const gallery = document.querySelector(".gallery");
+init();
 
-// LES FONCTIONS
+fetchCategories(urlCategories);
 
-//fonction qui initialise le site
 function init() {
   fetch(urlPosts)
     .then((response) => response.json())
@@ -27,9 +21,8 @@ function init() {
     });
 }
 
-//Une fonction qui crée les posts.
-
 function createPosts(data) {
+  // allPosts = [data];
   for (let i = 0; i < data.length; i++) {
     const posts = data[i];
     // Récupération de l'élément du DOM qui accueillera les figures
@@ -50,20 +43,51 @@ function createPosts(data) {
   }
 }
 
-//une fonction qui fetch tout les posts
-function getPosts() {
-  fetch(urlPosts)
-    .then((response) => response.json())
-    .then((apiData) => {
-      data = apiData;
+async function fetchCategories(url) {
+  const response = await fetch(url);
+  const apiData = await response.json();
+  const data = apiData;
+
+  const btnDiv = document.createElement("div");
+  btnDiv.classList.add("btnDiv");
+
+  for (let categorie of data) {
+    const buttonElement = document.createElement("button");
+    buttonElement.innerText = categorie.name;
+    buttonElement.classList = categorie.name;
+
+    btnDiv.appendChild(buttonElement);
+  }
+
+  const portfolio = document.querySelector("#portfolio");
+  portfolio.prepend(btnDiv);
+
+  const allButtonElement = document.createElement("button");
+  allButtonElement.innerText = "Tous";
+  btnDiv.prepend(allButtonElement);
+
+  const categoryButtons = btnDiv.querySelectorAll("button:not(:last-child)");
+
+  for (let button of categoryButtons) {
+    button.addEventListener("click", async function () {
+      gallery.innerHTML = "";
+      const filteredData = await getAllPostsByCategory(button.classList.value);
+      createPosts(filteredData);
     });
+  }
+
+  allButtonElement.addEventListener("click", async function () {
+    gallery.innerHTML = "";
+    const allData = await getAllPosts();
+    createPosts(allData);
+  });
 }
 
-//FILTRER les posts par leur catégories
 async function getAllPostsByCategory(category = "") {
   const response = await fetch(urlPosts);
   const apiData = await response.json();
   const data = apiData;
+  allPosts = [data];
 
   if (category) {
     return data.filter((post) => post.category.name === category);
@@ -72,72 +96,13 @@ async function getAllPostsByCategory(category = "") {
   }
 }
 
+async function getAllPosts() {
+  const response = await fetch(urlPosts);
+  const data = await response.json();
+  return data;
+}
+
 function actifColor(constElement) {
   constElement.style.backgroundColor = "#1d6154";
   constElement.style.color = "white";
 }
-
-//Fetch uniquement les catégories
-
-fetch(urlCategories)
-  .then((response) => response.json())
-  .then((apiData) => {
-    data = apiData;
-    for (let i = 0; i < data.length; i++) {
-      const categorie = data[i];
-
-      //création d'une balise dédiée à un bouton
-      const buttonElement = document.createElement("button");
-      buttonElement.innerText = categorie.name;
-      buttonElement.classList = categorie.name;
-
-      // Ajout du bouton dans la div "btnDiv"
-      btnDiv.appendChild(buttonElement);
-    }
-
-    // Ajout de la div "btnDiv" dans le DOM, dans la section #portfolio
-    portfolio.prepend(btnDiv);
-
-    const objectButton = btnDiv.querySelector(".Objets");
-
-    const appartButton = btnDiv.querySelector(".Appartements");
-
-    const hiltonButton = btnDiv.querySelector(".Hotels");
-
-    objectButton.addEventListener("click", async function () {
-      gallery.innerHTML = "";
-      const filteredData = await getAllPostsByCategory("Objets");
-      createPosts(filteredData);
-      // objectButton.onclick = actifColor(objectButton);
-    });
-
-    appartButton.addEventListener("click", async function () {
-      gallery.innerHTML = "";
-      const filteredData = await getAllPostsByCategory("Appartements");
-      createPosts(filteredData);
-      // appartButton.onclick = actifColor(appartButton);
-    });
-
-    hiltonButton.addEventListener("click", async function () {
-      gallery.innerHTML = "";
-      const filteredData = await getAllPostsByCategory("Hotels & restaurants");
-      createPosts(filteredData);
-      // hiltonButton.onclick = actifColor(hiltonButton);
-    });
-  });
-
-const allButtonElement = document.createElement("button");
-allButtonElement.innerText = "Tous";
-btnDiv.appendChild(allButtonElement);
-
-init();
-
-allButtonElement.addEventListener("click", () => {
-  //supprimer les posts de la gallery
-  gallery.innerHTML = "";
-  // fetch les données
-  getAllPostsByCategory("Tous");
-  // affiche les dans la page
-  createPosts(data);
-  // allButtonElement.onclick = actifColor(allButtonElement);
-});
