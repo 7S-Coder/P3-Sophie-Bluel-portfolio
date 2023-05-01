@@ -6,12 +6,17 @@ const ulNav = document.querySelector("header nav ul");
 
 const loginDiv = document.createElement("div");
 
+const editDiv = document.querySelector("#editDiv");
+
 let message = document.createElement("span");
 message.style.fontSize = "24px";
 message.style.paddingBottom = "5px";
 
 const login = ulNav.children[2];
 login.innerText = localStorage.getItem("token") ? "Logout" : "Login";
+if (localStorage.getItem("token")) {
+  editDiv.style.visibility = "visible";
+}
 
 loginDiv.style.width = "379px";
 loginDiv.style.height = "78vh";
@@ -88,17 +93,81 @@ function logout() {
   // Supprime le local storage et recharge la page pour afficher le bouton de connexion
   localStorage.clear();
   window.location.reload();
+  editDiv.style.visibility = "hidden";
 }
 
 function InputCSS(constElement) {
-  constElement.style.boxShadow = "0 4 14 0 rgba(0, 0, 0, 0.09)";
-  constElement.style.border = "1px solid rgba(0, 0, 0, 0.09)";
+  constElement.style.boxShadow = "0px 4px 14px rgba(0, 0, 0, 0.09)";
+  constElement.style.border = "1px solid rgba(255, 255, 255, 1)";
 }
 
 function editIcon(constElement) {
   constElement.classList.add("fa-solid");
   constElement.classList.add("fa-pen-to-square");
   constElement.classList.add("fa-lg");
+}
+
+function createEditDiv() {
+  document.body.style.paddingTop = "21px";
+  const editDiv = document.createElement("div");
+  editDiv.classList.add("editDiv");
+  editDiv.style.position = "absolute";
+  editDiv.style.top = "0";
+  editDiv.style.left = "0";
+  editDiv.style.display = "flex";
+  editDiv.style.justifyContent = "center";
+  editDiv.style.alignItems = "center";
+  editDiv.style.width = "100%";
+  editDiv.style.height = "59px";
+  editDiv.style.backgroundColor = "black";
+
+  const editButton = document.createElement("button");
+  editButton.innerText = "Mode édition";
+  editButton.style.backgroundColor = "black";
+  editButton.style.color = "white";
+  editButton.style.border = "none";
+  editButton.style.marginRight = "21px";
+  editButton.style.fontFamily = "Work Sans";
+
+  const publishButton = document.createElement("button");
+  publishButton.innerText = "Publier les changements";
+  publishButton.style.height = "38px";
+  publishButton.style.width = "216px";
+  publishButton.style.borderRadius = "60px";
+  publishButton.style.backgroundColor = "white";
+  publishButton.style.color = "black";
+  publishButton.style.fontFamily = "Work Sans";
+
+  const iconEditLink0 = document.createElement("i");
+  editIcon(iconEditLink0);
+
+  document.body.prepend(editDiv);
+  editDiv.append(editButton);
+  editButton.prepend(iconEditLink0);
+  editDiv.append(publishButton);
+
+  const introFigure = document.querySelector("#introduction > figure");
+  const articleFigure = document.querySelector("#introduction article");
+
+  const iconEditLink = document.createElement("i");
+  editIcon(iconEditLink);
+
+  const iconEditLink2 = document.createElement("i");
+  editIcon(iconEditLink2);
+
+  const editLink = document.createElement("a");
+  editLink.innerText = "Modifier";
+  editLink.style.marginLeft = "56px";
+
+  const editLink2 = document.createElement("a");
+  editLink2.innerText = "Modifier";
+  editLink2.style.position = "relative";
+  editLink2.style.top = "-20px";
+
+  introFigure.append(editLink);
+  editLink.prepend(iconEditLink);
+  articleFigure.prepend(editLink2);
+  editLink2.prepend(iconEditLink2);
 }
 
 function createModalPosts(data) {
@@ -231,69 +300,3 @@ login.addEventListener("click", () => {
     logout();
   }
 });
-
-function createEditDiv() {
-  document.body.style.paddingTop = "21px";
-  const editDiv = document.createElement("div");
-  editDiv.classList.add("editDiv");
-  editDiv.style.position = "absolute";
-  editDiv.style.top = "0";
-  editDiv.style.left = "0";
-  editDiv.style.display = "flex";
-  editDiv.style.justifyContent = "center";
-  editDiv.style.alignItems = "center";
-  editDiv.style.width = "100%";
-  editDiv.style.height = "59px";
-  editDiv.style.backgroundColor = "black";
-
-  const editButton = document.createElement("button");
-  editButton.innerText = "Mode édition";
-  editButton.style.backgroundColor = "black";
-  editButton.style.color = "white";
-  editButton.style.border = "none";
-  editButton.style.marginRight = "21px";
-  editButton.style.fontFamily = "Work Sans";
-
-  const publishButton = document.createElement("button");
-  publishButton.innerText = "Publier les changements";
-  publishButton.style.height = "38px";
-  publishButton.style.width = "216px";
-  publishButton.style.borderRadius = "60px";
-  publishButton.style.backgroundColor = "white";
-  publishButton.style.color = "black";
-  publishButton.style.fontFamily = "Work Sans";
-
-  const iconEditLink0 = document.createElement("i");
-  editIcon(iconEditLink0);
-
-  document.body.prepend(editDiv);
-  editDiv.append(editButton);
-  editButton.prepend(iconEditLink0);
-  editDiv.append(publishButton);
-
-  const introFigure = document.querySelector("#introduction > figure");
-  const articleFigure = document.querySelector("#introduction article");
-
-  const iconEditLink = document.createElement("i");
-  editIcon(iconEditLink);
-
-  const iconEditLink2 = document.createElement("i");
-  editIcon(iconEditLink2);
-
-  const editLink = document.createElement("a");
-  editLink.innerText = "Modifier";
-  editLink.style.marginLeft = "56px";
-
-  const editLink2 = document.createElement("a");
-  editLink2.innerText = "Modifier";
-  editLink2.style.position = "relative";
-  editLink2.style.top = "-20px";
-
-  introFigure.append(editLink);
-  editLink.prepend(iconEditLink);
-  articleFigure.prepend(editLink2);
-  editLink2.prepend(iconEditLink2);
-}
-
-if (localStorage.getItem("token")) {
-}

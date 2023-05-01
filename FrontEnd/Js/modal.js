@@ -1,12 +1,9 @@
 const deleteBtn = document.querySelector("#deleteAll");
 const token = localStorage.getItem("token");
 const divModal = document.querySelector("#modal div");
-const editDiv = document.querySelector("#editDiv");
 const editButton = document.querySelector("#editButton");
 const modal = document.getElementById("modal");
 let allPosts = [];
-
-// const postId = dataG.userId.value;
 
 editButton.addEventListener("click", function (e) {
   e.preventDefault();
@@ -21,7 +18,6 @@ function deletePost(token, divModal, allPosts) {
   const title = document.querySelector(".title").textContent;
   const postToDelete = allPosts.find((post) => post.title === title);
   const postId = postToDelete.id;
-  console.log(post.id);
 
   if (token) {
     const confirmation = confirm(

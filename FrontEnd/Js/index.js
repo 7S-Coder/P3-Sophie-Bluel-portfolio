@@ -43,6 +43,14 @@ function createPosts(data) {
   }
 }
 
+function toggleActiveClass(buttons, activeButton) {
+  for (let button of buttons) {
+    button.classList.remove("actif");
+  }
+
+  activeButton.classList.add("actif");
+}
+
 async function fetchCategories(url) {
   const response = await fetch(url);
   const apiData = await response.json();
@@ -73,6 +81,7 @@ async function fetchCategories(url) {
       gallery.innerHTML = "";
       const filteredData = await getAllPostsByCategory(button.classList.value);
       createPosts(filteredData);
+      toggleActiveClass(categoryButtons, button);
     });
   }
 
