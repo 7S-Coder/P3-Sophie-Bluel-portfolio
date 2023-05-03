@@ -1,21 +1,68 @@
 const urlLogin = "http://localhost:5678/api/users/login";
-
 const main = document.querySelector("main");
-
+const titlePortfolio = document.querySelector("#portfolio h2");
 const ulNav = document.querySelector("header nav ul");
-
 const loginDiv = document.createElement("div");
-
 const editDiv = document.querySelector("#editDiv");
+const introFigure = document.querySelector("#introduction > figure");
+const articleFigure = document.querySelector("#introduction article");
 
 let message = document.createElement("span");
 message.style.fontSize = "24px";
 message.style.paddingBottom = "5px";
 
 const login = ulNav.children[2];
+login.style.cursor = "pointer";
 login.innerText = localStorage.getItem("token") ? "Logout" : "Login";
 if (localStorage.getItem("token")) {
   editDiv.style.visibility = "visible";
+  const iconEditLink0 = document.createElement("i");
+  editIcon(iconEditLink0);
+  editButton.prepend(iconEditLink0);
+
+  const iconEditLink = document.createElement("i");
+  editIcon(iconEditLink);
+
+  const iconEditLink2 = document.createElement("i");
+  editIcon(iconEditLink2);
+
+  const editLink = document.createElement("a");
+  editLink.innerText = "Modifier";
+  editLink.style.marginLeft = "56px";
+
+  const editLink2 = document.createElement("a");
+  editLink2.innerText = "Modifier";
+  editLink2.style.position = "relative";
+  editLink2.style.top = "-20px";
+
+  const editLink3 = document.createElement("a");
+  editLink3.innerText = "Modifier";
+  editLink3.classList.add("editLink3");
+  editLink3.style.fontSize = "14px";
+  editLink3.style.fontFamily = "Work Sans";
+  editLink3.style.fontWeight = "normal";
+  editLink3.style.position = "relative";
+  editLink3.style.bottom = "4px";
+
+  editLink3.addEventListener("click", function (e) {
+    e.preventDefault();
+    openModal();
+    getAllPostsByCategory("Tous");
+    createModalPosts(data);
+
+    editLink3.disabled = true;
+  });
+
+  const iconEditLink3 = document.createElement("i");
+  editIcon(iconEditLink3);
+  iconEditLink3.style.marginLeft = "31px";
+
+  introFigure.append(editLink);
+  editLink.prepend(iconEditLink);
+  articleFigure.prepend(editLink2);
+  editLink2.prepend(iconEditLink2);
+  titlePortfolio.append(editLink3);
+  editLink3.prepend(iconEditLink3);
 }
 
 loginDiv.style.width = "379px";

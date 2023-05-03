@@ -51,8 +51,8 @@ function toggleActiveClass(buttons, activeButton) {
   activeButton.classList.add("actif");
 }
 
-async function fetchCategories(url) {
-  const response = await fetch(url);
+async function fetchCategories(urlCategories) {
+  const response = await fetch(urlCategories);
   const apiData = await response.json();
   const data = apiData;
 
@@ -72,9 +72,11 @@ async function fetchCategories(url) {
 
   const allButtonElement = document.createElement("button");
   allButtonElement.innerText = "Tous";
+  allButtonElement.style.cursor = "pointer";
+
   btnDiv.prepend(allButtonElement);
 
-  const categoryButtons = btnDiv.querySelectorAll("button:not(:last-child)");
+  const categoryButtons = btnDiv.querySelectorAll("button");
 
   for (let button of categoryButtons) {
     button.addEventListener("click", async function () {

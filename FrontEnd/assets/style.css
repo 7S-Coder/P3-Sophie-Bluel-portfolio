@@ -431,3 +431,21 @@ i {
   background-color: #1d6154;
   color: white;
 }
+
+.editLink3 {
+  color: black;
+}
+
+figure:hover,
+a:hover,
+.editLink3:hover {
+  color: #1d6154;
+  text-decoration: underline;
+}
+
+.btnDiv button,
+figure,
+#login button,
+a {
+  cursor: pointer;
+}

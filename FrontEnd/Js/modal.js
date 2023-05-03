@@ -15,8 +15,6 @@ editButton.addEventListener("click", function (e) {
 });
 
 function deletePost(token, divModal, allPosts) {
-  const title = document.querySelector(".title").textContent;
-  const postToDelete = allPosts.find((post) => post.title === title);
   const postId = postToDelete.id;
 
   if (token) {
@@ -53,6 +51,7 @@ function deletePost(token, divModal, allPosts) {
 }
 
 function deleteAllPosts(token, divModal) {
+  console.log(allPosts);
   if (token) {
     const confirmation = confirm(
       "Êtes-vous sûr de vouloir supprimer tous les posts ?"
@@ -139,10 +138,12 @@ function createModalPosts(data) {
     imageModal.src = posts.imageUrl;
     imageModal.style.width = "6vw";
     imageModal.addEventListener("mouseover", function (e) {
-      divBtn.style.visibility = "visible";
+      growingImage.style.visibility = "visible";
+      deleteImg.style.visibility = "visible";
     });
     imageModal.addEventListener("mouseleave", function (e) {
-      divBtn.style.visibility = "hidden";
+      growingImage.style.visibility = "hidden";
+      deleteImg.style.visibility = "hidden";
     });
 
     const EditLinkModal = document.createElement("a");
@@ -194,10 +195,30 @@ function createModalPosts(data) {
 /////////////////// modal 2 ////////////////////
 const modal2 = document.querySelector("#modal2");
 const inputUnderBtn = document.createElement("input");
-const fileValue = inputUnderBtn.value;
-const inputCategory = document.createElement("input");
-const inputTitle = document.createElement("input");
+inputUnderBtn.accept = "image/jpeg, image/png";
+inputUnderBtn.style.display = "none";
+inputUnderBtn.type = "file";
+inputUnderBtn.id = "file";
+inputUnderBtn.name = "imageUrl";
 
+async function fetchCategoriesForSelect() {
+  const response = await fetch(urlCategories);
+  const apiData = await response.json();
+  console.log(apiData);
+
+  const selectCategory = document.createElement("select");
+  for (let i = 0; i < apiData.length; i++) {
+    const categorie = apiData[i];
+    const optionSelect = document.createElement("option");
+    optionSelect.innerText = categorie.name;
+    optionSelect.value = categorie.id;
+    selectCategory.appendChild(optionSelect);
+  }
+
+  return selectCategory;
+}
+
+const inputTitle = document.createElement("input");
 const addPicturesButton = document.querySelector("#addPicturesBtn");
 
 addPicturesButton.addEventListener("click", () => {
@@ -233,6 +254,25 @@ addPicturesButton.addEventListener("click", () => {
   addPicturesForm.style.paddingBottom = "47px";
   addPicturesForm.style.borderBottom = "1px solid rgba(179, 179, 179, 1)";
 
+  async function displayCategoriesForSelect() {
+    const selectCategory = await fetchCategoriesForSelect();
+    selectCategory.style.width = "100%";
+    selectCategory.style.marginTop = "12px";
+    selectCategory.style.height = "51px";
+    selectCategory.style.borderRadius = "10px";
+    InputCSS(selectCategory);
+    selectCategory.style.paddingLeft = "16px";
+    const labelCategory = document.createElement("label");
+    labelCategory.setAttribute("for", "category");
+    labelCategory.innerText = "Catégorie";
+    labelCategory.style.marginTop = "10px";
+
+    labelCategory.appendChild(selectCategory);
+    addPicturesForm.appendChild(labelCategory);
+  }
+
+  displayCategoriesForSelect();
+
   const h2AddPicturesForm = document.createElement("h2");
   h2AddPicturesForm.textContent = "Ajout photo";
   h2AddPicturesForm.style.textAlign = "center";
@@ -258,7 +298,7 @@ addPicturesButton.addEventListener("click", () => {
   imgIcone.style.marginBottom = "20px";
 
   const addPhotoLabel = document.createElement("label");
-  addPhotoLabel.name = "file";
+  addPhotoLabel.name = "image";
   addPhotoLabel.setAttribute("for", "file");
   addPhotoLabel.innerText = "+ Ajouter photo";
   addPhotoLabel.style.display = "flex";
@@ -273,11 +313,6 @@ addPicturesButton.addEventListener("click", () => {
   addPhotoLabel.style.color = "#306685";
   addPhotoLabel.style.cursor = "pointer";
 
-  inputUnderBtn.accept = "image/jpeg, image/png";
-  inputUnderBtn.style.display = "none";
-  inputUnderBtn.type = "file";
-  inputUnderBtn.id = "file";
-  inputUnderBtn.name = "file";
   inputUnderBtn.addEventListener("change", previewFile);
 
   const labelPhoto = document.createElement("label");
@@ -296,34 +331,6 @@ addPicturesButton.addEventListener("click", () => {
   InputCSS(inputTitle);
   inputTitle.style.paddingLeft = "16px";
 
-  const labelCategory = document.createElement("label");
-  labelCategory.innerText = "Catégorie";
-  labelCategory.style.marginTop = "10px";
-
-  // inputCategory.type = "radio";
-  inputCategory.name = "category";
-  inputCategory.style.marginTop = "10px";
-  inputCategory.style.height = "51px";
-  inputCategory.style.borderRadius = "10px";
-  InputCSS(inputCategory);
-  inputCategory.style.paddingLeft = "16px";
-
-  // const option1 = document.createElement("option");
-  // option1.value = "option1";
-  // option1.textContent = "Option 1";
-
-  // const option2 = document.createElement("option");
-  // option2.value = "option2";
-  // option2.textContent = "Option 2";
-
-  // const option3 = document.createElement("option");
-  // option3.value = "option3";
-  // option3.textContent = "Option 3";
-
-  // inputCategory.appendChild(option1);
-  // inputCategory.appendChild(option2);
-  // inputCategory.appendChild(option3);
-
   const validBtn = document.createElement("input");
   validBtn.innerText = "Valider";
   validBtn.setAttribute("disabled", "true");
@@ -336,7 +343,7 @@ addPicturesButton.addEventListener("click", () => {
   validBtn.style.border = "none";
   validBtn.style.marginBottom = "55px";
 
-  addPicturesForm.addEventListener("change", () => {
+  addPicturesForm.addEventListener("change", (e) => {
     const inputs = addPicturesForm.querySelectorAll("input");
     let isFormComplete = true;
     inputs.forEach((input) => {
@@ -345,19 +352,52 @@ addPicturesButton.addEventListener("click", () => {
       }
     });
     if (isFormComplete) {
-      console.log("tout les champs sont remplis");
+      e.preventDefault();
+      console.log(inputs);
+      // const formData = new FormData(addPicturesForm);
       validBtn.classList.add("succes");
       validBtn.removeAttribute("disabled");
       validBtn.style.backgroundColor = "#1d6154";
       validBtn.style.color = "white";
       validBtn.style.cursor = "pointer";
+
+      // formData.append("imageUrl", `${inputUnderBtn.value}`);
+      // formData.append("categoryId", `${inputCategory.value}`);
+      // formData.append("title", `${inputTitle.value}`);
+
+      console.log(formData);
     }
   });
 
-  validBtn.addEventListener("click", function () {
-    addImg();
-  });
+  validBtn.addEventListener("click", (e) => {
+    e.preventDefault();
 
+    fetch(urlPosts, {
+      method: "POST",
+      body: {
+        image: inputUnderBtn.value,
+        title: inputTitle.value,
+        // category: inputCategory.value,
+      },
+
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${token}`,
+      },
+      mode: "cors",
+    })
+      .then((response) => {
+        if (response.ok) {
+          console.log("Image uploaded successfully!");
+        } else {
+          console.log("An error occurred while uploading the image.");
+        }
+      })
+      .catch((error) => {
+        console.error("An error occurred while uploading the image:", error);
+      });
+  });
   modal2.appendChild(addPicturesForm);
   addPicturesForm.appendChild(h2AddPicturesForm);
   //Insertion de la div option
@@ -373,20 +413,18 @@ addPicturesButton.addEventListener("click", () => {
   //Insertion du champ titre
   addPicturesForm.appendChild(labelTitle);
   addPicturesForm.appendChild(inputTitle);
-  //Insertion du champ catégorie
-  addPicturesForm.appendChild(labelCategory);
-  addPicturesForm.appendChild(inputCategory);
   //Insertion du boutton validé
   modal2.appendChild(validBtn);
 });
 
-function displayImage(e, file) {
+function displayImage(e) {
   const imageModal = document.querySelector("form > div");
   const image = document.createElement("img");
 
   const deleteButton = document.createElement("button");
   deleteButton.innerHTML = `\u{1F5D1}`;
   deleteButton.title = "Supprimer cette image";
+  deleteButton.classList.add("deleteButtonPF");
 
   image.src = e.target.result;
   image.style.height = "169px";
@@ -396,8 +434,8 @@ function displayImage(e, file) {
   imageModal.appendChild(deleteButton);
 
   deleteButton.addEventListener("click", (e) => {
-    // inputUnderBtn.value = "";
-    // // e.target.photoDiv.remove();
+    e.preventDefault();
+    file.innerHTML = "";
   });
 }
 
@@ -417,38 +455,4 @@ function previewFile() {
   fileReader.addEventListener("load", (e) => {
     displayImage(e, file);
   });
-}
-
-async function addImg(inputUnderBtn, inputCategory, inputTitle) {
-  const cheminFichier = fileValue;
-  const regex = /\\|\/([^\\\/]+)$/;
-  const match = regex.exec(cheminFichier);
-  fetch(urlPosts, {
-    method: "POST",
-    body: JSON.stringify({
-      image: match,
-      category: inputCategory.value,
-      title: inputTitle.value,
-    }),
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-    mode: "cors",
-  })
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error(response.statusText);
-      }
-
-      return response.json();
-    })
-    .then((apiData) => {
-      console.log(apiData);
-    })
-    .catch((error) => {
-      console.error("Error:", error);
-      message.style.color = "red";
-      message.textContent = "Cette image ne peut être envoyée.";
-    });
 }
