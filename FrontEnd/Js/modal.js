@@ -429,7 +429,7 @@ async function displayCategoriesForSelect() {
   // displayCategoriesForSelect();
 }
 
-async function fetchCategoriesForSelect() {
+async function fetchCategoriesForSelect(apiDataCate) {
   const response = await fetch(urlCategories);
   const apiData = await response.json();
 

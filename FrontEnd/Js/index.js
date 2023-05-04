@@ -7,7 +7,7 @@ btnDiv.classList.add("btnDiv");
 
 init();
 
-fetchCategories(urlCategories);
+categoriesButtons(urlCategories);
 
 function init() {
   fetch(urlPosts)
@@ -51,7 +51,7 @@ function toggleActiveClass(buttons, activeButton) {
   activeButton.classList.add("actif");
 }
 
-async function fetchCategories(urlCategories) {
+async function categoriesButtons(urlCategories) {
   const response = await fetch(urlCategories);
   const apiData = await response.json();
   const data = apiData;
