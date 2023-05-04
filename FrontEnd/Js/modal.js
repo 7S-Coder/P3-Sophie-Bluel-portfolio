@@ -469,7 +469,8 @@ function displayImage(e) {
 
   deleteButton.addEventListener("click", (e) => {
     e.preventDefault();
-    file.innerHTML = "";
+    photoDiv.innerHTML = "";
+    displayInitDivPhoto();
   });
 }
 
