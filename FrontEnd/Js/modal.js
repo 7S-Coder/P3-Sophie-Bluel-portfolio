@@ -218,7 +218,7 @@ backOption.addEventListener("click", function () {
   const modal2 = document.querySelector("#modal2");
   modal.style.display = "block";
   modal2.style.display = "none";
-  modal2.innerHTML = "";
+  photoDiv.innerHTML = "";
 });
 
 const optionDiv = document.createElement("div");
@@ -347,7 +347,6 @@ addPicturesButton.addEventListener("click", () => {
 });
 
 function openModal2() {
-  // modal2.innerHTML = "";
   modal2.appendChild(addPicturesForm);
   addPicturesForm.appendChild(h2AddPicturesForm);
   //Insertion de la div option
