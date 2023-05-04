@@ -193,14 +193,7 @@ function createModalPosts(data) {
 }
 
 /////////////////// modal 2 ////////////////////
-let counter = 0;
 const modal2 = document.querySelector("#modal2");
-const inputUnderBtn = document.createElement("input");
-inputUnderBtn.accept = "image/jpeg, image/png";
-inputUnderBtn.style.display = "none";
-inputUnderBtn.type = "file";
-inputUnderBtn.id = "file";
-inputUnderBtn.name = "imageUrl";
 
 const inputTitle = document.createElement("input");
 const addPicturesButton = document.querySelector("#addPicturesBtn");
@@ -250,38 +243,6 @@ photoDiv.style.marginBottom = "30px";
 photoDiv.style.backgroundColor = "#E8F1F6";
 photoDiv.style.alignItems = "center";
 photoDiv.style.fontFamily = "Work Sans";
-
-const imgIcone = document.createElement("i");
-imgIcone.classList.add("fa-sharp");
-imgIcone.classList.add("fa-regular");
-imgIcone.classList.add("fa-image");
-imgIcone.classList.add("fa-2xl");
-imgIcone.style.color = "#b9c5cc";
-imgIcone.style.marginTop = "50px";
-imgIcone.style.marginBottom = "20px";
-
-const addPhotoLabel = document.createElement("label");
-addPhotoLabel.name = "image";
-addPhotoLabel.setAttribute("for", "file");
-addPhotoLabel.innerText = "+ Ajouter photo";
-addPhotoLabel.style.display = "flex";
-addPhotoLabel.style.alignItems = "center";
-addPhotoLabel.style.justifyContent = "center";
-addPhotoLabel.style.height = "36px";
-addPhotoLabel.style.width = "173px";
-addPhotoLabel.style.marginBottom = "6px";
-addPhotoLabel.style.backgroundColor = "#CBD6DC";
-addPhotoLabel.style.borderRadius = "50px";
-addPhotoLabel.style.border = "none";
-addPhotoLabel.style.color = "#306685";
-addPhotoLabel.style.cursor = "pointer";
-
-inputUnderBtn.addEventListener("change", previewFile);
-
-const labelPhoto = document.createElement("label");
-labelPhoto.innerText = "jpg, png. 4mo max";
-labelPhoto.style.fontSize = "10px";
-labelPhoto.style.marginTop = "4px";
 
 const labelTitle = document.createElement("label");
 labelTitle.innerText = "Titre";
@@ -395,18 +356,65 @@ function openModal2() {
   optionDiv.appendChild(closeOption);
   //Insertion de la div photo
   addPicturesForm.appendChild(photoDiv);
-  photoDiv.appendChild(imgIcone);
-  photoDiv.appendChild(addPhotoLabel);
-  photoDiv.appendChild(inputUnderBtn);
-  photoDiv.appendChild(labelPhoto);
+  displayInitDivPhoto();
   // insertion du champs catégorie
   displayCategoriesForSelect();
-
   //Insertion du champ titre
   addPicturesForm.appendChild(labelTitle);
   addPicturesForm.appendChild(inputTitle);
   //Insertion du boutton validé
   modal2.appendChild(validBtn);
+}
+
+async function displayInitDivPhoto() {
+  const initDivPhoto = document.createElement("div");
+  initDivPhoto.style.textAlign = "center";
+
+  const imgIcone = document.createElement("i");
+  imgIcone.classList.add("fa-sharp");
+  imgIcone.classList.add("fa-regular");
+  imgIcone.classList.add("fa-image");
+  imgIcone.classList.add("fa-2xl");
+  imgIcone.style.color = "#b9c5cc";
+  imgIcone.style.marginTop = "50px";
+  imgIcone.style.marginBottom = "20px";
+
+  const inputUnderBtn = document.createElement("input");
+  inputUnderBtn.accept = "image/jpeg, image/png";
+  inputUnderBtn.style.display = "none";
+  inputUnderBtn.type = "file";
+  inputUnderBtn.id = "file";
+  inputUnderBtn.name = "imageUrl";
+  inputUnderBtn.addEventListener("change", previewFile);
+
+  const addPhotoLabel = document.createElement("label");
+  addPhotoLabel.name = "image";
+  addPhotoLabel.setAttribute("for", "file");
+  addPhotoLabel.innerText = "+ Ajouter photo";
+  addPhotoLabel.style.display = "flex";
+  addPhotoLabel.style.alignItems = "center";
+  addPhotoLabel.style.justifyContent = "center";
+  addPhotoLabel.style.height = "36px";
+  addPhotoLabel.style.width = "173px";
+  addPhotoLabel.style.marginBottom = "6px";
+  addPhotoLabel.style.backgroundColor = "#CBD6DC";
+  addPhotoLabel.style.borderRadius = "50px";
+  addPhotoLabel.style.border = "none";
+  addPhotoLabel.style.color = "#306685";
+  addPhotoLabel.style.cursor = "pointer";
+
+  const labelPhoto = document.createElement("label");
+  labelPhoto.innerText = "jpg, png. 4mo max";
+  labelPhoto.style.fontSize = "10px";
+  labelPhoto.style.marginTop = "4px";
+
+  photoDiv.appendChild(initDivPhoto);
+  initDivPhoto.appendChild(imgIcone);
+  initDivPhoto.appendChild(addPhotoLabel);
+  initDivPhoto.appendChild(inputUnderBtn);
+  initDivPhoto.appendChild(labelPhoto);
+
+  return initDivPhoto;
 }
 
 async function displayCategoriesForSelect() {
@@ -425,11 +433,9 @@ async function displayCategoriesForSelect() {
   labelCategory.appendChild(selectCategory);
 
   addPicturesForm.appendChild(labelCategory);
-
-  // displayCategoriesForSelect();
 }
 
-async function fetchCategoriesForSelect(apiDataCate) {
+async function fetchCategoriesForSelect() {
   const response = await fetch(urlCategories);
   const apiData = await response.json();
 
