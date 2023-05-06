@@ -197,7 +197,7 @@ const modal2 = document.querySelector("#modal2");
 const inputUnderBtn = document.createElement("input");
 const inputTitle = document.createElement("input");
 const selectCategory = document.createElement("select");
-let selectedOption;
+let selectedOption = 1;
 const addPicturesButton = document.querySelector("#addPicturesBtn");
 const addPicturesForm = document.createElement("form");
 addPicturesForm.method = "POST";
@@ -317,18 +317,19 @@ addPicturesButton.addEventListener("click", () => {
   validBtn.addEventListener("click", (e) => {
     e.preventDefault();
 
+    const formData = new FormData();
+    // formData.append("id", 0);
+    formData.append("title", inputTitle.value);
+    formData.append("image", inputUnderBtn.value);
+    formData.append("category", selectedOption.toString());
+    // formData.append("userId", 0);
+
     fetch(urlPosts, {
       method: "POST",
-      body: {
-        title: inputTitle.value,
-        imageUrl: inputUnderBtn.value,
-        categoryId: selectedOption.toString(),
-        // categoryId: selectedOption.value.toString(),
-      },
+      body: formData,
 
       headers: {
         Accept: "application/json",
-        "Content-Type": "multipart/form-data",
         Authorization: `Bearer ${token}`,
       },
       mode: "cors",
@@ -387,7 +388,7 @@ async function displayInitDivPhoto() {
   inputUnderBtn.addEventListener("change", previewFile);
 
   const addPhotoLabel = document.createElement("label");
-  addPhotoLabel.name = "image";
+  addPhotoLabel.name = "imageUrl";
   addPhotoLabel.setAttribute("for", "file");
   addPhotoLabel.innerText = "+ Ajouter photo";
   addPhotoLabel.style.display = "flex";
@@ -418,7 +419,7 @@ async function displayInitDivPhoto() {
 
 async function displayCategoriesForSelect() {
   const selectCategory = await fetchCategoriesForSelect();
-  selectCategory.name = "category";
+  selectCategory.name = "categoryId";
   selectCategory.style.width = "100%";
   selectCategory.style.width = "100%";
   selectCategory.style.marginTop = "12px";
@@ -453,9 +454,8 @@ async function fetchCategoriesForSelect() {
   selectCategory.addEventListener("change", function () {
     selectedOption = selectCategory.options[selectCategory.selectedIndex];
     console.log("Je sélectionne " + selectedOption.text);
-    console.log("La valeur sélectionnée est " + selectedOption.value);
+    console.log("La valeur sélectionnée est " + selectedOption);
     console.log("la valeur de selectCategory est " + selectCategory.value);
-    selectedOption = selectedOption.value;
   });
 
   return selectCategory;
@@ -493,7 +493,7 @@ function previewFile() {
 
   const file = this.files[0];
 
-  inputUnderBtn.value = file.name;
+  inputUnderBtn.value = file.value;
 
   const fileReader = new FileReader();
 
