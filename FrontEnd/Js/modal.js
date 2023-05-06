@@ -179,7 +179,7 @@ function createModalPosts(data) {
     deleteImg.classList.add("fa-solid");
     deleteImg.classList.add("fa-trash");
     deleteImg.classList.add("fa-xs");
-    deleteImg.addEventListener("click", function () {
+    deleteImg.addEventListener("click", () => {
       deletePost(token, divModal, allPosts);
     });
 
@@ -194,8 +194,10 @@ function createModalPosts(data) {
 
 /////////////////// modal 2 ////////////////////
 const modal2 = document.querySelector("#modal2");
-
+const inputUnderBtn = document.createElement("input");
 const inputTitle = document.createElement("input");
+const selectCategory = document.createElement("select");
+let selectedOption;
 const addPicturesButton = document.querySelector("#addPicturesBtn");
 const addPicturesForm = document.createElement("form");
 addPicturesForm.method = "POST";
@@ -299,7 +301,6 @@ addPicturesButton.addEventListener("click", () => {
     });
     if (isFormComplete) {
       e.preventDefault();
-      console.log(inputs);
       // const formData = new FormData(addPicturesForm);
       validBtn.classList.add("succes");
       validBtn.removeAttribute("disabled");
@@ -307,11 +308,9 @@ addPicturesButton.addEventListener("click", () => {
       validBtn.style.color = "white";
       validBtn.style.cursor = "pointer";
 
-      // formData.append("imageUrl", `${inputUnderBtn.value}`);
-      // formData.append("categoryId", `${inputCategory.value}`);
+      // formData.append("image", `${inputUnderBtn.value}`);
+      // formData.append("category", `${selectedOption.value}`);
       // formData.append("title", `${inputTitle.value}`);
-
-      console.log(formData);
     }
   });
 
@@ -321,9 +320,10 @@ addPicturesButton.addEventListener("click", () => {
     fetch(urlPosts, {
       method: "POST",
       body: {
-        image: inputUnderBtn.value,
         title: inputTitle.value,
-        // category: inputCategory.value,
+        imageUrl: inputUnderBtn.value,
+        categoryId: selectedOption.toString(),
+        // categoryId: selectedOption.value.toString(),
       },
 
       headers: {
@@ -413,11 +413,13 @@ async function displayInitDivPhoto() {
   initDivPhoto.appendChild(inputUnderBtn);
   initDivPhoto.appendChild(labelPhoto);
 
-  return initDivPhoto;
+  return initDivPhoto, inputUnderBtn;
 }
 
 async function displayCategoriesForSelect() {
   const selectCategory = await fetchCategoriesForSelect();
+  selectCategory.name = "category";
+  selectCategory.style.width = "100%";
   selectCategory.style.width = "100%";
   selectCategory.style.marginTop = "12px";
   selectCategory.style.height = "51px";
@@ -439,6 +441,7 @@ async function fetchCategoriesForSelect() {
   const apiData = await response.json();
 
   const selectCategory = document.createElement("select");
+
   for (let i = 0; i < apiData.length; i++) {
     const categorie = apiData[i];
     const optionSelect = document.createElement("option");
@@ -446,6 +449,14 @@ async function fetchCategoriesForSelect() {
     optionSelect.value = categorie.id;
     selectCategory.appendChild(optionSelect);
   }
+
+  selectCategory.addEventListener("change", function () {
+    selectedOption = selectCategory.options[selectCategory.selectedIndex];
+    console.log("Je sélectionne " + selectedOption.text);
+    console.log("La valeur sélectionnée est " + selectedOption.value);
+    console.log("la valeur de selectCategory est " + selectCategory.value);
+    selectedOption = selectedOption.value;
+  });
 
   return selectCategory;
 }
@@ -482,6 +493,8 @@ function previewFile() {
 
   const file = this.files[0];
 
+  inputUnderBtn.value = file.name;
+
   const fileReader = new FileReader();
 
   fileReader.readAsDataURL(file);
@@ -489,4 +502,5 @@ function previewFile() {
   fileReader.addEventListener("load", (e) => {
     displayImage(e, file);
   });
+  return inputUnderBtn;
 }
