@@ -3,6 +3,7 @@ const token = localStorage.getItem("token");
 const divModal = document.querySelector("#modal div");
 const editButton = document.querySelector("#editButton");
 const modal = document.getElementById("modal");
+const deleteAllButton = document.querySelector("#deleteAll");
 let allPosts = [];
 let postModal;
 
@@ -112,10 +113,8 @@ function createModalPosts(data) {
     deleteImg.classList.add("fa-xs");
     deleteImg.addEventListener("click", (e) => {
       const postFigure = e.target.closest("figure");
-      console.log("aïe dit la figure" + postFigure);
 
       const postId = postFigure.classList[0];
-      console.log("Je demande si je peux supprimer " + postId);
       if (token) {
         const confirmation = confirm(
           "Êtes-vous sûr de vouloir supprimer ce post ?"
@@ -140,6 +139,41 @@ function createModalPosts(data) {
             .catch((error) => {
               console.error(`Erreur lors de la suppression : ${error}`);
             });
+        }
+      }
+    });
+
+    deleteAllButton.addEventListener("click", function () {
+      // Récupération de tous les éléments figure
+      const postFigures = document.querySelectorAll("figure");
+
+      if (token) {
+        const confirmation = confirm(
+          "Êtes-vous sûr de vouloir supprimer tous les posts ?"
+        );
+        if (confirmation) {
+          postFigures.forEach((postFigure) => {
+            const postId = postFigure.classList[0];
+            fetch(`${urlPosts}/${postId}`, {
+              method: "DELETE",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+            })
+              .then((response) => {
+                if (response.ok) {
+                  console.log(`Tous les posts sont supprimés.`);
+                } else {
+                  console.error(
+                    `Erreur lors de la suppression : ${response.status}`
+                  );
+                }
+              })
+              .catch((error) => {
+                console.error(`Erreur lors de la suppression : ${error}`);
+              });
+          });
         }
       }
     });
@@ -300,13 +334,18 @@ addPicturesButton.addEventListener("click", () => {
     })
       .then((response) => {
         if (response.ok) {
-          console.log("Image uploaded successfully!");
+          console.log("Image ajuté avec succès");
         } else {
-          console.log("An error occurred while uploading the image.");
+          console.error(
+            "Une erreur s'est produite lors de l'upload de l'image."
+          );
         }
       })
       .catch((error) => {
-        console.error("An error occurred while uploading the image:", error);
+        console.error(
+          "Une erreur s'est produite lors de l'upload de l'image.",
+          error
+        );
       });
   });
 });
@@ -371,8 +410,6 @@ function displayInitDivPhoto() {
   labelPhoto.style.fontSize = "10px";
   labelPhoto.style.marginTop = "4px";
 
-  console.log("Je crée une nouvelle initDiv !");
-
   photoDiv.appendChild(initDivPhoto);
   initDivPhoto.appendChild(imgIcone);
   initDivPhoto.appendChild(addPhotoLabel);
@@ -418,9 +455,6 @@ async function fetchCategoriesForSelect() {
 
   selectCategory.addEventListener("change", function () {
     selectedOption = selectCategory.options[selectCategory.selectedIndex];
-    console.log("Je sélectionne " + selectedOption.text);
-    console.log("La valeur sélectionnée est " + selectedOption);
-    console.log("la valeur de selectCategory est " + selectCategory.value);
   });
 
   return selectCategory;
@@ -439,8 +473,6 @@ function displayImage(e) {
   image.style.height = "169px";
 
   initDivPhoto.style.display = "none";
-  console.log(initDivPhoto);
-  console.log("la initDiv est cachée !");
   imageModal.appendChild(image);
   imageModal.appendChild(deleteButton);
 
@@ -448,7 +480,6 @@ function displayImage(e) {
     e.preventDefault();
     imageModal.innerHTML = "";
     initDivPhoto.style.display = "block";
-    console.log("la initDiv est re là regarde !");
     console.log(initDivPhoto);
 
     photoDiv.appendChild(initDivPhoto);

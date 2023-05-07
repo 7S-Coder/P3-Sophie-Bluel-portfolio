@@ -101,7 +101,6 @@ async function getAllPostsByCategory(category = "") {
   const data = apiData;
   allPosts = [data];
   ids = data.map((image) => image.id);
-  console.log(ids);
 
   if (category) {
     return data.filter((post) => post.category.name === category);
