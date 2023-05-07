@@ -3,6 +3,7 @@ const urlCategories = "http://localhost:5678/api/categories";
 const portfolio = document.querySelector("#portfolio");
 const gallery = document.querySelector(".gallery");
 const btnDiv = document.createElement("div");
+let ids;
 btnDiv.classList.add("btnDiv");
 
 init();
@@ -99,6 +100,8 @@ async function getAllPostsByCategory(category = "") {
   const apiData = await response.json();
   const data = apiData;
   allPosts = [data];
+  ids = data.map((image) => image.id);
+  console.log(ids);
 
   if (category) {
     return data.filter((post) => post.category.name === category);

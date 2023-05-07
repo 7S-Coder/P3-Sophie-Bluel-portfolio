@@ -4,6 +4,9 @@ const divModal = document.querySelector("#modal div");
 const editButton = document.querySelector("#editButton");
 const modal = document.getElementById("modal");
 let allPosts = [];
+let postModal;
+
+// let id = document.querySelector("allPosts[0][0].id");
 
 editButton.addEventListener("click", function (e) {
   e.preventDefault();
@@ -13,80 +16,6 @@ editButton.addEventListener("click", function (e) {
 
   editButton.disabled = true;
 });
-
-function deletePost(token, divModal, allPosts) {
-  const postId = postToDelete.id;
-
-  if (token) {
-    const confirmation = confirm(
-      "Êtes-vous sûr de vouloir supprimer ce post ?"
-    );
-
-    if (confirmation) {
-      fetch(`https://example.com/posts/${postId}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      })
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error(
-              "Une erreur s'est produite lors de la suppression du post."
-            );
-          }
-
-          return response.json();
-        })
-        .then(() => {
-          divModal.innerHTML = "";
-          divModal.getAllPostsByCategory("Tous");
-        })
-        .catch((error) => console.error(error));
-    }
-  } else {
-    console.log("Vous n'êtes pas autorisé à effectuer cette action.");
-  }
-}
-
-function deleteAllPosts(token, divModal) {
-  console.log(allPosts);
-  if (token) {
-    const confirmation = confirm(
-      "Êtes-vous sûr de vouloir supprimer tous les posts ?"
-    );
-
-    if (confirmation) {
-      fetch("https://example.com/posts", {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-        .then((response) => response.json())
-        .then((posts) => {
-          for (let i = 0; i < posts.length; i++) {
-            fetch(`https://example.com/posts/${posts[i].id}`, {
-              method: "DELETE",
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
-              },
-            });
-          }
-
-          divModal.innerHTML = "";
-          createModalPosts(data);
-        })
-        .catch((error) => console.error(error));
-    }
-  } else {
-    const error = document.createElement("p");
-    error.textContent = "Vous n'avez pas les droits pour supprimer les posts.";
-    divModal.appendChild(error);
-  }
-}
 
 function openModal() {
   document.getElementById("modal-overlay").style.display = "block";
@@ -116,7 +45,7 @@ function openLastModal() {
 
 function createModalPosts(data) {
   for (let i = 0; i < data.length; i++) {
-    const posts = data[i];
+    let posts = data[i];
     // Récupération de l'élément du DOM qui accueillera les figures
     const divModal = document.querySelector("#modal div");
     divModal.style.display = "flex";
@@ -127,11 +56,12 @@ function createModalPosts(data) {
     divModal.style.paddingBottom = "47px";
 
     // Création d’une balise dédiée à un post
-    const postModal = document.createElement("figure");
+    postModal = document.createElement("figure");
     postModal.style.display = "flex";
     postModal.style.flexDirection = "column";
     postModal.style.marginRight = "6px";
     postModal.style.marginBottom = "11px";
+    postModal.classList.add(posts.id);
 
     // Création des balises
     const imageModal = document.createElement("img");
@@ -141,10 +71,11 @@ function createModalPosts(data) {
       growingImage.style.visibility = "visible";
       deleteImg.style.visibility = "visible";
     });
-    imageModal.addEventListener("mouseleave", function (e) {
-      growingImage.style.visibility = "hidden";
-      deleteImg.style.visibility = "hidden";
-    });
+
+    // imageModal.addEventListener("mouseleave", function (e) {
+    //   growingImage.style.visibility = "hidden";
+    //   deleteImg.style.visibility = "hidden";
+    // });
 
     const EditLinkModal = document.createElement("a");
     EditLinkModal.innerText = "éditer";
@@ -179,8 +110,38 @@ function createModalPosts(data) {
     deleteImg.classList.add("fa-solid");
     deleteImg.classList.add("fa-trash");
     deleteImg.classList.add("fa-xs");
-    deleteImg.addEventListener("click", () => {
-      deletePost(token, divModal, allPosts);
+    deleteImg.addEventListener("click", (e) => {
+      const postFigure = e.target.closest("figure");
+      console.log("aïe dit la figure" + postFigure);
+
+      const postId = postFigure.classList[0];
+      console.log("Je demande si je peux supprimer " + postId);
+      if (token) {
+        const confirmation = confirm(
+          "Êtes-vous sûr de vouloir supprimer ce post ?"
+        );
+        if (confirmation) {
+          fetch(`${urlPosts}/${postId}`, {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          })
+            .then((response) => {
+              if (response.ok) {
+                console.log(`Le post est supprimé.`);
+              } else {
+                console.error(
+                  `Erreur lors de la suppression : ${response.status}`
+                );
+              }
+            })
+            .catch((error) => {
+              console.error(`Erreur lors de la suppression : ${error}`);
+            });
+        }
+      }
     });
 
     divModal.appendChild(postModal);
@@ -194,10 +155,13 @@ function createModalPosts(data) {
 
 /////////////////// modal 2 ////////////////////
 const modal2 = document.querySelector("#modal2");
+const initDivPhoto = document.createElement("div");
+initDivPhoto.classList.add("initDivPhoto");
 const inputUnderBtn = document.createElement("input");
 const inputTitle = document.createElement("input");
 const selectCategory = document.createElement("select");
 let selectedOption = 1;
+let file;
 const addPicturesButton = document.querySelector("#addPicturesBtn");
 const addPicturesForm = document.createElement("form");
 addPicturesForm.method = "POST";
@@ -320,7 +284,7 @@ addPicturesButton.addEventListener("click", () => {
     const formData = new FormData();
     // formData.append("id", 0);
     formData.append("title", inputTitle.value);
-    formData.append("image", inputUnderBtn.value);
+    formData.append("image", file);
     formData.append("category", selectedOption.toString());
     // formData.append("userId", 0);
 
@@ -366,8 +330,7 @@ function openModal2() {
   modal2.appendChild(validBtn);
 }
 
-async function displayInitDivPhoto() {
-  const initDivPhoto = document.createElement("div");
+function displayInitDivPhoto() {
   initDivPhoto.style.textAlign = "center";
 
   const imgIcone = document.createElement("i");
@@ -408,6 +371,8 @@ async function displayInitDivPhoto() {
   labelPhoto.style.fontSize = "10px";
   labelPhoto.style.marginTop = "4px";
 
+  console.log("Je crée une nouvelle initDiv !");
+
   photoDiv.appendChild(initDivPhoto);
   initDivPhoto.appendChild(imgIcone);
   initDivPhoto.appendChild(addPhotoLabel);
@@ -429,7 +394,7 @@ async function displayCategoriesForSelect() {
   selectCategory.style.paddingLeft = "16px";
 
   const labelCategory = document.createElement("label");
-  labelCategory.setAttribute("for", "category");
+  labelCategory.setAttribute("for", "categoryId");
   labelCategory.innerText = "Catégorie";
   labelCategory.style.marginTop = "10px";
   labelCategory.appendChild(selectCategory);
@@ -473,14 +438,20 @@ function displayImage(e) {
   image.src = e.target.result;
   image.style.height = "169px";
 
-  imageModal.innerHTML = "";
+  initDivPhoto.style.display = "none";
+  console.log(initDivPhoto);
+  console.log("la initDiv est cachée !");
   imageModal.appendChild(image);
   imageModal.appendChild(deleteButton);
 
   deleteButton.addEventListener("click", (e) => {
     e.preventDefault();
-    photoDiv.innerHTML = "";
-    displayInitDivPhoto();
+    imageModal.innerHTML = "";
+    initDivPhoto.style.display = "block";
+    console.log("la initDiv est re là regarde !");
+    console.log(initDivPhoto);
+
+    photoDiv.appendChild(initDivPhoto);
   });
 }
 
@@ -491,9 +462,7 @@ function previewFile() {
     return;
   }
 
-  const file = this.files[0];
-
-  inputUnderBtn.value = file.value;
+  file = this.files[0];
 
   const fileReader = new FileReader();
 
@@ -502,5 +471,4 @@ function previewFile() {
   fileReader.addEventListener("load", (e) => {
     displayImage(e, file);
   });
-  return inputUnderBtn;
 }
