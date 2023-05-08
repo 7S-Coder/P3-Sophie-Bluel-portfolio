@@ -68,6 +68,7 @@ function createModalPosts(data) {
     const imageModal = document.createElement("img");
     imageModal.src = posts.imageUrl;
     imageModal.style.width = "6vw";
+    imageModal.style.height = "16vh";
     imageModal.addEventListener("mouseenter", function (e) {
       growingImage.style.visibility = "visible";
       deleteImg.style.visibility = "visible";
@@ -495,7 +496,8 @@ function previewFile() {
     return;
   }
 
-  const file = this.files[0];
+  file = this.files[0];
+  console.log(file);
   const fileSize = file.size;
   const maxSize = 4 * 1024 * 1024;
 
