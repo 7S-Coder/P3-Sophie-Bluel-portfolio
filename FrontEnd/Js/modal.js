@@ -68,15 +68,15 @@ function createModalPosts(data) {
     const imageModal = document.createElement("img");
     imageModal.src = posts.imageUrl;
     imageModal.style.width = "6vw";
-    imageModal.addEventListener("mouseover", function (e) {
+    imageModal.addEventListener("mouseenter", function (e) {
       growingImage.style.visibility = "visible";
       deleteImg.style.visibility = "visible";
     });
 
-    // imageModal.addEventListener("mouseleave", function (e) {
-    //   growingImage.style.visibility = "hidden";
-    //   deleteImg.style.visibility = "hidden";
-    // });
+    imageModal.addEventListener("mouseleave", function (e) {
+      growingImage.style.visibility = "hidden";
+      deleteImg.style.visibility = "hidden";
+    });
 
     const EditLinkModal = document.createElement("a");
     EditLinkModal.innerText = "éditer";
@@ -143,7 +143,7 @@ function createModalPosts(data) {
       }
     });
 
-    deleteAllButton.addEventListener("click", function () {
+    deleteAllButton.addEventListener("click", () => {
       // Récupération de tous les éléments figure
       const postFigures = document.querySelectorAll("figure");
 
@@ -342,10 +342,7 @@ addPicturesButton.addEventListener("click", () => {
         }
       })
       .catch((error) => {
-        console.error(
-          "Une erreur s'est produite lors de l'upload de l'image.",
-          error
-        );
+        console.error("Une erreur s'est produite lors de l'upload de l'image.");
       });
   });
 });
@@ -360,6 +357,7 @@ function openModal2() {
   //Insertion de la div photo
   addPicturesForm.appendChild(photoDiv);
   displayInitDivPhoto();
+  addPicturesForm.appendChild(message);
   // insertion du champs catégorie
   displayCategoriesForSelect();
   //Insertion du champ titre
@@ -480,7 +478,6 @@ function displayImage(e) {
     e.preventDefault();
     imageModal.innerHTML = "";
     initDivPhoto.style.display = "block";
-    console.log(initDivPhoto);
 
     photoDiv.appendChild(initDivPhoto);
   });
@@ -489,11 +486,26 @@ function displayImage(e) {
 function previewFile() {
   const fileExtensionRegex = /\.(jp?g|png)$/i;
 
+  message.style.color = "red";
+
   if (this.files.length === 0 || !fileExtensionRegex.test(this.files[0].name)) {
+    console.error("Le fichier doit être une image de type JPG ou PNG.");
+    message.textContent = "Le fichier doit être une image de type JPG ou PNG.";
+
     return;
   }
 
-  file = this.files[0];
+  const file = this.files[0];
+  const fileSize = file.size;
+  const maxSize = 4 * 1024 * 1024;
+
+  if (fileSize > maxSize) {
+    console.error("Le fichier est trop volumineux (maximum 4 Mo)");
+    console.log("Taille du fichier : " + fileSize + " octets");
+    message.textContent = "Le fichier est trop volumineux (maximum 4 Mo)";
+
+    return;
+  }
 
   const fileReader = new FileReader();
 
