@@ -135,7 +135,7 @@ function createModalPosts(data) {
           })
             .then((response) => {
               if (response.ok) {
-                console.log(`Le post est supprimé.`);
+                console.log(`La photo est supprimée.`);
               } else {
                 console.error(
                   `Erreur lors de la suppression : ${response.status}`
@@ -152,35 +152,32 @@ function createModalPosts(data) {
     deleteAllButton.addEventListener("click", () => {
       // Récupération de tous les éléments figure
       const postFigures = document.querySelectorAll("figure");
-
+      // const confirmation = confirm(
+      //   "Êtes-vous sûr de vouloir supprimer tous les posts ?"
+      // );
       if (token) {
-        const confirmation = confirm(
-          "Êtes-vous sûr de vouloir supprimer tous les posts ?"
-        );
-        if (confirmation) {
-          postFigures.forEach((postFigure) => {
-            const postId = postFigure.classList[0];
-            fetch(`${urlPosts}/${postId}`, {
-              method: "DELETE",
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
-              },
+        postFigures.forEach((postFigure) => {
+          const postId = postFigure.classList[0];
+          fetch(`${urlPosts}/${postId}`, {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          })
+            .then((response) => {
+              if (response.ok) {
+                console.log(`Toutes les photos ont été supprimées.`);
+              } else {
+                console.error(
+                  `Erreur lors de la suppression : ${response.status}`
+                );
+              }
             })
-              .then((response) => {
-                if (response.ok) {
-                  console.log(`Tous les posts sont supprimés.`);
-                } else {
-                  console.error(
-                    `Erreur lors de la suppression : ${response.status}`
-                  );
-                }
-              })
-              .catch((error) => {
-                console.error(`Erreur lors de la suppression : ${error}`);
-              });
-          });
-        }
+            .catch((error) => {
+              console.error(`Erreur lors de la suppression : ${error}`);
+            });
+        });
       }
     });
 
@@ -200,7 +197,8 @@ initDivPhoto.classList.add("initDivPhoto");
 const inputUnderBtn = document.createElement("input");
 const inputTitle = document.createElement("input");
 const selectCategory = document.createElement("select");
-let selectedOption = 1;
+let selectedOption;
+// selectedOption.value = 1;
 let file;
 const addPicturesButton = document.querySelector("#addPicturesBtn");
 const addPicturesForm = document.createElement("form");
@@ -275,31 +273,14 @@ validBtn.style.height = "36px";
 validBtn.style.border = "none";
 validBtn.style.marginBottom = "55px";
 
-// addPicturesForm.appendChild(h2AddPicturesForm);
-// //Insertion de la div option
-// modal2.prepend(optionDiv);
-// optionDiv.appendChild(backOption);
-// optionDiv.appendChild(closeOption);
-// //Insertion de la div photo
-// addPicturesForm.appendChild(photoDiv);
-// photoDiv.appendChild(imgIcone);
-// photoDiv.appendChild(addPhotoLabel);
-// photoDiv.appendChild(inputUnderBtn);
-// photoDiv.appendChild(labelPhoto);
-// //insertion du champs catégorie
-
-// //Insertion du champ titre
-// addPicturesForm.appendChild(labelTitle);
-// addPicturesForm.appendChild(inputTitle);
-// //Insertion du boutton validé
-// modal2.appendChild(validBtn);
-
 addPicturesButton.addEventListener("click", () => {
   addPicturesForm.innerHTML = "";
   openModal2();
   addPicturesForm.addEventListener("change", (e) => {
     const inputs = addPicturesForm.querySelectorAll("input");
     let isFormComplete = true;
+    // console.log(selectedOption.value);
+
     inputs.forEach((input) => {
       if (input.value.trim() === "") {
         isFormComplete = false;
@@ -307,16 +288,11 @@ addPicturesButton.addEventListener("click", () => {
     });
     if (isFormComplete) {
       e.preventDefault();
-      // const formData = new FormData(addPicturesForm);
       validBtn.classList.add("succes");
       validBtn.removeAttribute("disabled");
       validBtn.style.backgroundColor = "#1d6154";
       validBtn.style.color = "white";
       validBtn.style.cursor = "pointer";
-
-      // formData.append("image", `${inputUnderBtn.value}`);
-      // formData.append("category", `${selectedOption.value}`);
-      // formData.append("title", `${inputTitle.value}`);
     }
   });
 
@@ -326,7 +302,7 @@ addPicturesButton.addEventListener("click", () => {
     const formData = new FormData();
     formData.append("title", inputTitle.value);
     formData.append("image", file);
-    formData.append("category", selectedOption.toString());
+    formData.append("category", selectedOption.value);
 
     fetch(urlPosts, {
       method: "POST",
@@ -352,7 +328,6 @@ addPicturesButton.addEventListener("click", () => {
           "Une erreur s'est produite lors de l'upload de l'image." + error
         );
       });
-    return;
   });
 });
 
@@ -460,8 +435,12 @@ async function fetchCategoriesForSelect() {
     selectCategory.appendChild(optionSelect);
   }
 
+  selectedOption = selectCategory.options[0];
+
   selectCategory.addEventListener("change", function () {
     selectedOption = selectCategory.options[selectCategory.selectedIndex];
+    console.log(selectedOption);
+    console.log(selectedOption.value);
   });
 
   return selectCategory;
