@@ -49,12 +49,20 @@ function createModalPosts(data) {
     let posts = data[i];
     // Récupération de l'élément du DOM qui accueillera les figures
     const divModal = document.querySelector("#modal div");
+
+    divModal.style.position = "relative";
+    divModal.style.transform = "translate(-50%, -50%)";
+    divModal.style.top = "39%";
+    divModal.style.left = "52%";
     divModal.style.display = "flex";
     divModal.style.flexWrap = "wrap";
-    divModal.style.width = "80%";
-    divModal.style.marginLeft = "12%";
+    divModal.style.width = "34vw";
     divModal.style.borderBottom = "1px solid #B3B3B3";
     divModal.style.paddingBottom = "47px";
+    divModal.style.height = "54vh";
+    divModal.style.border = "1px solid black";
+    divModal.style.overflowY = "scroll";
+    divModal.style.overflowX = "hidden";
 
     // Création d’une balise dédiée à un post
     postModal = document.createElement("figure");
@@ -70,7 +78,7 @@ function createModalPosts(data) {
     imageModal.style.width = "6vw";
     imageModal.style.minWidth = "115px";
     imageModal.style.height = "16vh";
-    imageModal.style.minHeight = "155px";
+    imageModal.style.minHeight = "149px";
     imageModal.addEventListener("mouseover", function (e) {
       divBtn.style.visibility = "visible";
     });
