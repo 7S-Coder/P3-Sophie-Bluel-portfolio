@@ -90,8 +90,8 @@ async function categoriesButtons(urlCategories) {
 
   allButtonElement.addEventListener("click", async function () {
     gallery.innerHTML = "";
-    const allData = await getAllPosts();
-    createPosts(allData);
+    // const allData = await getAllPosts();
+    // createPosts(allData);
   });
 }
 

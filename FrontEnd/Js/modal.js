@@ -68,15 +68,17 @@ function createModalPosts(data) {
     const imageModal = document.createElement("img");
     imageModal.src = posts.imageUrl;
     imageModal.style.width = "6vw";
+    imageModal.style.minWidth = "115px";
     imageModal.style.height = "16vh";
-    imageModal.addEventListener("mouseenter", function (e) {
-      growingImage.style.visibility = "visible";
-      deleteImg.style.visibility = "visible";
+    imageModal.style.minHeight = "155px";
+    imageModal.addEventListener("mouseover", function (e) {
+      divBtn.style.visibility = "visible";
     });
 
-    imageModal.addEventListener("mouseleave", function (e) {
-      growingImage.style.visibility = "hidden";
-      deleteImg.style.visibility = "hidden";
+    imageModal.addEventListener("mouseout", function (e) {
+      setTimeout(function () {
+        divBtn.style.visibility = "hidden";
+      }, 400);
     });
 
     const EditLinkModal = document.createElement("a");
@@ -84,8 +86,8 @@ function createModalPosts(data) {
 
     const divBtn = document.createElement("div");
     divBtn.style.position = "relative";
-    divBtn.style.bottom = "165px";
-    divBtn.style.left = "71px";
+    divBtn.style.bottom = "87%";
+    divBtn.style.left = "61%";
     divBtn.style.visibility = "hidden";
 
     const growingImage = document.createElement("button");
@@ -96,6 +98,7 @@ function createModalPosts(data) {
     growingImage.style.color = "white";
     growingImage.style.border = "none";
     growingImage.style.marginRight = "2px";
+    growingImage.style.cursor = "pointer";
     growingImage.classList.add("fa-sharp");
     growingImage.classList.add("fa-solid");
     growingImage.classList.add("fa-arrows-up-down-left-right");
@@ -108,6 +111,8 @@ function createModalPosts(data) {
     deleteImg.style.backgroundColor = "black";
     deleteImg.style.color = "white";
     deleteImg.style.border = "none";
+    deleteImg.style.cursor = "pointer";
+
     deleteImg.classList.add("fa-sharp");
     deleteImg.classList.add("fa-solid");
     deleteImg.classList.add("fa-trash");
@@ -261,7 +266,9 @@ validBtn.innerText = "Valider";
 validBtn.setAttribute("disabled", "true");
 validBtn.type = "submit";
 validBtn.style.position = "relative";
-validBtn.style.left = "39%";
+validBtn.style.transform = "translate(-50%, -50%)";
+validBtn.style.top = "50%";
+validBtn.style.left = "50%";
 validBtn.style.color = "rgba(255, 255, 255, 1)";
 validBtn.style.backgroundColor = "#A7A7A7";
 validBtn.style.height = "36px";
@@ -317,11 +324,9 @@ addPicturesButton.addEventListener("click", () => {
     e.preventDefault();
 
     const formData = new FormData();
-    // formData.append("id", 0);
     formData.append("title", inputTitle.value);
     formData.append("image", file);
     formData.append("category", selectedOption.toString());
-    // formData.append("userId", 0);
 
     fetch(urlPosts, {
       method: "POST",
@@ -335,7 +340,7 @@ addPicturesButton.addEventListener("click", () => {
     })
       .then((response) => {
         if (response.ok) {
-          console.log("Image ajuté avec succès");
+          console.log("Image ajouté avec succès");
         } else {
           console.error(
             "Une erreur s'est produite lors de l'upload de l'image."
@@ -343,8 +348,11 @@ addPicturesButton.addEventListener("click", () => {
         }
       })
       .catch((error) => {
-        console.error("Une erreur s'est produite lors de l'upload de l'image.");
+        console.error(
+          "Une erreur s'est produite lors de l'upload de l'image." + error
+        );
       });
+    return;
   });
 });
 
@@ -497,7 +505,6 @@ function previewFile() {
   }
 
   file = this.files[0];
-  console.log(file);
   const fileSize = file.size;
   const maxSize = 4 * 1024 * 1024;
 
