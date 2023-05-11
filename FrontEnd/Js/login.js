@@ -6,6 +6,7 @@ const loginDiv = document.createElement("div");
 const editDiv = document.querySelector("#editDiv");
 const introFigure = document.querySelector("#introduction > figure");
 const articleFigure = document.querySelector("#introduction article");
+let categoryNames = [];
 
 let message = document.createElement("span");
 message.style.fontSize = "24px";

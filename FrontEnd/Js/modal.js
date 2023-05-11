@@ -7,8 +7,6 @@ const deleteAllButton = document.querySelector("#deleteAll");
 let allPosts = [];
 let postModal;
 
-// let id = document.querySelector("allPosts[0][0].id");
-
 editButton.addEventListener("click", function (e) {
   e.preventDefault();
   openModal();
@@ -130,7 +128,10 @@ function createModalPosts(data) {
     deleteImg.classList.add("fa-solid");
     deleteImg.classList.add("fa-trash");
     deleteImg.classList.add("fa-xs");
-    deleteImg.addEventListener("click", (e) => {
+    deleteImg.addEventListener("click", function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+
       const postFigure = e.target.closest("figure");
 
       const postId = postFigure.classList[0];

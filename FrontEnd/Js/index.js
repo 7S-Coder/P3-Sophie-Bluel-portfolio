@@ -16,6 +16,7 @@ function init() {
     .then((apiData) => {
       data = apiData;
       createPosts(data);
+      categoryNames = [new Set(data.map((post) => post.category.name))];
     })
     .catch((error) => {
       console.error(error);
@@ -90,21 +91,33 @@ async function categoriesButtons(urlCategories) {
 
   allButtonElement.addEventListener("click", async function () {
     gallery.innerHTML = "";
+    init();
   });
 }
 
-async function getAllPostsByCategory(category = "") {
-  const response = await fetch(urlPosts);
-  const apiData = await response.json();
-  const data = apiData;
-  allPosts = [data];
-  ids = data.map((image) => image.id);
+// async function getAllPostsByCategory(category = "") {
+//   const response = await fetch(urlPosts);
+//   const apiData = await response.json();
+//   const data = apiData;
+//   allPosts = [data];
+//   ids = data.map((image) => image.id);
 
+//   if (category) {
+//     return data.filter((post) => post.category.name === category);
+//   } else {
+//     return data;
+//   }
+// }
+
+function getAllPostsByCategory(category = "") {
+  let filteredData = data; // On commence avec toutes les données
+
+  // Si une catégorie est spécifiée, on filtre les données
   if (category) {
-    return data.filter((post) => post.category.name === category);
-  } else {
-    return data;
+    filteredData = data.filter((post) => post.category.name === category);
   }
+
+  return filteredData;
 }
 
 async function getAllPosts() {
