@@ -74,21 +74,17 @@ function createModalPosts(data) {
     // Création des balises
     const imageModal = document.createElement("img");
     imageModal.src = posts.imageUrl;
-    // imageModal.style.width = "5vw";
     imageModal.style.width = "78px";
-    // imageModal.style.minWidth = "115px";
-    // imageModal.style.height = "14vh";
     imageModal.style.height = "105px";
-    // imageModal.style.minHeight = "149px";
     imageModal.addEventListener("mouseover", function (e) {
       divBtn.style.visibility = "visible";
     });
 
-    // imageModal.addEventListener("mouseout", function (e) {
-    //   setTimeout(function () {
-    //     divBtn.style.visibility = "hidden";
-    //   }, 400);
-    // });
+    imageModal.addEventListener("mouseout", function (e) {
+      setTimeout(function () {
+        divBtn.style.visibility = "hidden";
+      }, 400);
+    });
 
     const EditLinkModal = document.createElement("a");
     EditLinkModal.innerText = "éditer";
@@ -162,11 +158,8 @@ function createModalPosts(data) {
     });
 
     deleteAllButton.addEventListener("click", () => {
-      // Récupération de tous les éléments figure
       const postFigures = document.querySelectorAll("figure");
-      // const confirmation = confirm(
-      //   "Êtes-vous sûr de vouloir supprimer tous les posts ?"
-      // );
+
       if (token) {
         postFigures.forEach((postFigure) => {
           const postId = postFigure.classList[0];
@@ -237,7 +230,8 @@ backOption.addEventListener("click", function () {
   modal2.style.display = "none";
   photoDiv.innerHTML = "";
   initDivPhoto.innerHTML = "";
-  displayInitDivPhoto();
+  initDivPhoto.style.display = "block";
+  message.textContent = "";
 });
 
 const optionDiv = document.createElement("div");
@@ -280,7 +274,7 @@ validBtn.setAttribute("disabled", "true");
 validBtn.type = "submit";
 validBtn.style.position = "relative";
 validBtn.style.transform = "translate(-50%, -50%)";
-validBtn.style.top = "5%";
+validBtn.style.top = "3%";
 validBtn.style.left = "50%";
 validBtn.style.color = "rgba(255, 255, 255, 1)";
 validBtn.style.backgroundColor = "#A7A7A7";

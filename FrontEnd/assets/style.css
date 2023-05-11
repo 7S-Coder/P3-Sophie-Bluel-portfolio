@@ -353,12 +353,19 @@ footer nav ul {
   font-family: sans-serif;
 }
 
+.modal {
+  height: 731px;
+}
+
+.modal2 {
+  height: 670px;
+}
+
 .modal,
 .modal2 {
   display: none;
   position: fixed;
   width: 40vw;
-  height: 731px;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
