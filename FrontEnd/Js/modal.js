@@ -56,12 +56,11 @@ function createModalPosts(data) {
     divModal.style.left = "52%";
     divModal.style.display = "flex";
     divModal.style.flexWrap = "wrap";
-    divModal.style.width = "34vw";
+    divModal.style.width = "23vw";
     divModal.style.borderBottom = "1px solid #B3B3B3";
     divModal.style.paddingBottom = "47px";
-    divModal.style.height = "54vh";
-    divModal.style.border = "1px solid black";
-    divModal.style.overflowY = "scroll";
+    divModal.style.height = "61%";
+    divModal.style.overflowY = "hidden";
     divModal.style.overflowX = "hidden";
 
     // Création d’une balise dédiée à un post
@@ -75,33 +74,43 @@ function createModalPosts(data) {
     // Création des balises
     const imageModal = document.createElement("img");
     imageModal.src = posts.imageUrl;
-    imageModal.style.width = "6vw";
-    imageModal.style.minWidth = "115px";
-    imageModal.style.height = "16vh";
-    imageModal.style.minHeight = "149px";
+    // imageModal.style.width = "5vw";
+    imageModal.style.width = "78px";
+    // imageModal.style.minWidth = "115px";
+    // imageModal.style.height = "14vh";
+    imageModal.style.height = "105px";
+    // imageModal.style.minHeight = "149px";
     imageModal.addEventListener("mouseover", function (e) {
       divBtn.style.visibility = "visible";
     });
 
-    imageModal.addEventListener("mouseout", function (e) {
-      setTimeout(function () {
-        divBtn.style.visibility = "hidden";
-      }, 400);
-    });
+    // imageModal.addEventListener("mouseout", function (e) {
+    //   setTimeout(function () {
+    //     divBtn.style.visibility = "hidden";
+    //   }, 400);
+    // });
 
     const EditLinkModal = document.createElement("a");
     EditLinkModal.innerText = "éditer";
 
     const divBtn = document.createElement("div");
     divBtn.style.position = "relative";
-    divBtn.style.bottom = "87%";
-    divBtn.style.left = "61%";
+    divBtn.style.bottom = "84%";
+    divBtn.style.left = "44%";
+    divBtn.style.display = "flex";
+    divBtn.style.justifyContent = "space-between";
+
     divBtn.style.visibility = "hidden";
+    divBtn.style.width = "42px";
+    divBtn.style.height = "19px";
 
     const growingImage = document.createElement("button");
     growingImage.title = "Grossir l'image.";
-    growingImage.style.width = "20px";
-    growingImage.style.height = "20px";
+    growingImage.style.display = "flex";
+    growingImage.style.justifyContent = "center";
+    growingImage.style.alignItems = "center";
+    growingImage.style.width = "19px";
+    growingImage.style.height = "100%";
     growingImage.style.backgroundColor = "black";
     growingImage.style.color = "white";
     growingImage.style.border = "none";
@@ -114,8 +123,8 @@ function createModalPosts(data) {
 
     const deleteImg = document.createElement("button");
     deleteImg.title = "Supprimer l'image.";
-    deleteImg.style.width = "20px";
-    deleteImg.style.height = "20px";
+    deleteImg.style.width = "19px";
+    deleteImg.style.height = "100%";
     deleteImg.style.backgroundColor = "black";
     deleteImg.style.color = "white";
     deleteImg.style.border = "none";
@@ -130,30 +139,25 @@ function createModalPosts(data) {
 
       const postId = postFigure.classList[0];
       if (token) {
-        const confirmation = confirm(
-          "Êtes-vous sûr de vouloir supprimer ce post ?"
-        );
-        if (confirmation) {
-          fetch(`${urlPosts}/${postId}`, {
-            method: "DELETE",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
+        fetch(`${urlPosts}/${postId}`, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        })
+          .then((response) => {
+            if (response.ok) {
+              console.log(`La photo est supprimée.`);
+            } else {
+              console.error(
+                `Erreur lors de la suppression : ${response.status}`
+              );
+            }
           })
-            .then((response) => {
-              if (response.ok) {
-                console.log(`La photo est supprimée.`);
-              } else {
-                console.error(
-                  `Erreur lors de la suppression : ${response.status}`
-                );
-              }
-            })
-            .catch((error) => {
-              console.error(`Erreur lors de la suppression : ${error}`);
-            });
-        }
+          .catch((error) => {
+            console.error(`Erreur lors de la suppression : ${error}`);
+          });
       }
     });
 
@@ -221,6 +225,7 @@ const h2AddPicturesForm = document.createElement("h2");
 h2AddPicturesForm.textContent = "Ajout photo";
 h2AddPicturesForm.style.textAlign = "center";
 h2AddPicturesForm.style.color = "black";
+h2AddPicturesForm.style.marginBottom = "36px";
 
 const backOption = document.createElement("i");
 backOption.classList.add("fa-solid");
@@ -231,6 +236,8 @@ backOption.addEventListener("click", function () {
   modal.style.display = "block";
   modal2.style.display = "none";
   photoDiv.innerHTML = "";
+  initDivPhoto.innerHTML = "";
+  displayInitDivPhoto();
 });
 
 const optionDiv = document.createElement("div");
@@ -273,7 +280,7 @@ validBtn.setAttribute("disabled", "true");
 validBtn.type = "submit";
 validBtn.style.position = "relative";
 validBtn.style.transform = "translate(-50%, -50%)";
-validBtn.style.top = "50%";
+validBtn.style.top = "5%";
 validBtn.style.left = "50%";
 validBtn.style.color = "rgba(255, 255, 255, 1)";
 validBtn.style.backgroundColor = "#A7A7A7";
@@ -287,7 +294,6 @@ addPicturesButton.addEventListener("click", () => {
   addPicturesForm.addEventListener("change", (e) => {
     const inputs = addPicturesForm.querySelectorAll("input");
     let isFormComplete = true;
-    // console.log(selectedOption.value);
 
     inputs.forEach((input) => {
       if (input.value.trim() === "") {
