@@ -31,7 +31,7 @@ function closeModal() {
   editButton.disabled = false;
   editButton.style.cursor = "pointer";
   data = "";
-  window.location.reload();
+  // window.location.reload();
 }
 
 function openLastModal() {
@@ -145,7 +145,16 @@ function createModalPosts(data) {
         })
           .then((response) => {
             if (response.ok) {
-              console.log(`La photo est supprimée.`);
+              console.log(`La photo a bien été supprimée.`);
+              message.style.color = "#1d6154";
+              message.textContent = "La photo a bien été supprimée.";
+              modal.appendChild(message);
+              setTimeout(() => {
+                modal.removeChild(message);
+                message.textContent = "";
+              }, 1000);
+
+              postFigure.remove();
             } else {
               console.error(
                 `Erreur lors de la suppression : ${response.status}`
@@ -174,6 +183,16 @@ function createModalPosts(data) {
             .then((response) => {
               if (response.ok) {
                 console.log(`Toutes les photos ont été supprimées.`);
+                message.style.color = "#1d6154";
+                message.textContent = "Toutes les photos ont été supprimées.";
+                modal.appendChild(message);
+                setTimeout(() => {
+                  modal.removeChild(message);
+                  message.textContent = "";
+                }, 1000);
+                postFigures.forEach((postFigure) => {
+                  postFigure.remove();
+                });
               } else {
                 console.error(
                   `Erreur lors de la suppression : ${response.status}`
@@ -326,6 +345,14 @@ addPicturesButton.addEventListener("click", () => {
       .then((response) => {
         if (response.ok) {
           console.log("Image ajouté avec succès");
+          message.style.color = "#1d6154";
+          message.textContent = "La photo a bien été ajouté.";
+          addPicturesForm.appendChild(message);
+          setTimeout(() => {
+            addPicturesForm.removeChild(message);
+            message.textContent = "";
+            window.location.href = "index.html";
+          }, 400);
         } else {
           console.error(
             "Une erreur s'est produite lors de l'upload de l'image."

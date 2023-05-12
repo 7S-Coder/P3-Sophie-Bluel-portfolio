@@ -110,9 +110,8 @@ async function categoriesButtons(urlCategories) {
 // }
 
 function getAllPostsByCategory(category = "") {
-  let filteredData = data; // On commence avec toutes les données
+  let filteredData = data;
 
-  // Si une catégorie est spécifiée, on filtre les données
   if (category) {
     filteredData = data.filter((post) => post.category.name === category);
   }
