@@ -30,8 +30,9 @@ function closeModal() {
   document.body.style.overflow = "auto";
   editButton.disabled = false;
   editButton.style.cursor = "pointer";
+  initDivPhoto.innerHTML = "";
   data = "";
-  // window.location.reload();
+  window.location.reload();
 }
 
 function openLastModal() {
@@ -58,12 +59,11 @@ function createModalPosts(data) {
     divModal.style.borderBottom = "1px solid #B3B3B3";
     divModal.style.paddingBottom = "47px";
     divModal.style.height = "61%";
-    divModal.style.overflowY = "hidden";
-    divModal.style.overflowX = "hidden";
 
     // Création d’une balise dédiée à un post
     postModal = document.createElement("figure");
     postModal.style.display = "flex";
+    postModal.style.height = "120px";
     postModal.style.flexDirection = "column";
     postModal.style.marginRight = "6px";
     postModal.style.marginBottom = "11px";
@@ -74,14 +74,29 @@ function createModalPosts(data) {
     imageModal.src = posts.imageUrl;
     imageModal.style.width = "78px";
     imageModal.style.height = "105px";
-    imageModal.addEventListener("mouseover", function (e) {
-      divBtn.style.visibility = "visible";
+    imageModal.classList.add("imageModal");
+    // imageModal.addEventListener("mouseover", function (e) {
+    //   growingImage.style.visibility = "visible";
+    //   deleteImg.style.visibility = "visible";
+    // });
+
+    // imageModal.addEventListener("mouseout", function (e) {
+    //   growingImage.style.visibility = "hidden";
+    //   deleteImg.style.visibility = "hidden";
+    // });
+    imageModal.addEventListener("mousemove", function (e) {
+      var x = e.clientX - this.offsetLeft;
+      var y = e.clientY - this.offsetTop;
+
+      if (x >= 1 && x <= 1000 && y >= 1 && y <= 1000) {
+        // La souris est sur l'image
+        divBtn.style.visibility = "visible";
+      }
     });
 
-    imageModal.addEventListener("mouseout", function (e) {
-      setTimeout(function () {
-        divBtn.style.visibility = "hidden";
-      }, 400);
+    postModal.addEventListener("mouseleave", function (e) {
+      // La souris est sortie de l'image
+      divBtn.style.visibility = "hidden";
     });
 
     const EditLinkModal = document.createElement("a");
@@ -89,14 +104,14 @@ function createModalPosts(data) {
 
     const divBtn = document.createElement("div");
     divBtn.style.position = "relative";
-    divBtn.style.bottom = "84%";
-    divBtn.style.left = "44%";
+    divBtn.style.bottom = "115px";
+    divBtn.style.left = "33px";
     divBtn.style.display = "flex";
     divBtn.style.justifyContent = "space-between";
-
     divBtn.style.visibility = "hidden";
     divBtn.style.width = "42px";
     divBtn.style.height = "19px";
+    divBtn.classList.add("divBtn");
 
     const growingImage = document.createElement("button");
     growingImage.title = "Grossir l'image.";
@@ -104,12 +119,14 @@ function createModalPosts(data) {
     growingImage.style.justifyContent = "center";
     growingImage.style.alignItems = "center";
     growingImage.style.width = "19px";
-    growingImage.style.height = "100%";
+    growingImage.style.height = "19px";
     growingImage.style.backgroundColor = "black";
     growingImage.style.color = "white";
     growingImage.style.border = "none";
     growingImage.style.marginRight = "2px";
     growingImage.style.cursor = "pointer";
+
+    growingImage.classList.add("growingImage");
     growingImage.classList.add("fa-sharp");
     growingImage.classList.add("fa-solid");
     growingImage.classList.add("fa-arrows-up-down-left-right");
@@ -118,22 +135,19 @@ function createModalPosts(data) {
     const deleteImg = document.createElement("button");
     deleteImg.title = "Supprimer l'image.";
     deleteImg.style.width = "19px";
-    deleteImg.style.height = "100%";
+    deleteImg.style.height = "19px";
     deleteImg.style.backgroundColor = "black";
     deleteImg.style.color = "white";
     deleteImg.style.border = "none";
     deleteImg.style.cursor = "pointer";
 
+    deleteImg.classList.add("deleteImg");
     deleteImg.classList.add("fa-sharp");
     deleteImg.classList.add("fa-solid");
     deleteImg.classList.add("fa-trash");
     deleteImg.classList.add("fa-xs");
     deleteImg.addEventListener("click", function (e) {
-      e.preventDefault();
-      e.stopPropagation();
-
       const postFigure = e.target.closest("figure");
-
       const postId = postFigure.classList[0];
       if (token) {
         fetch(`${urlPosts}/${postId}`, {
@@ -209,6 +223,8 @@ function createModalPosts(data) {
     divModal.appendChild(postModal);
     postModal.appendChild(imageModal);
     postModal.appendChild(EditLinkModal);
+    // postModal.appendChild(growingImage);
+    // postModal.appendChild(deleteImg);
     postModal.appendChild(divBtn);
     divBtn.appendChild(growingImage);
     divBtn.appendChild(deleteImg);

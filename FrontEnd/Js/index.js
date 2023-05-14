@@ -85,6 +85,7 @@ async function categoriesButtons(urlCategories) {
       gallery.innerHTML = "";
       const filteredData = await getAllPostsByCategory(button.classList.value);
       createPosts(filteredData);
+
       toggleActiveClass(categoryButtons, button);
     });
   }
@@ -94,20 +95,6 @@ async function categoriesButtons(urlCategories) {
     init();
   });
 }
-
-// async function getAllPostsByCategory(category = "") {
-//   const response = await fetch(urlPosts);
-//   const apiData = await response.json();
-//   const data = apiData;
-//   allPosts = [data];
-//   ids = data.map((image) => image.id);
-
-//   if (category) {
-//     return data.filter((post) => post.category.name === category);
-//   } else {
-//     return data;
-//   }
-// }
 
 function getAllPostsByCategory(category = "") {
   let filteredData = data;

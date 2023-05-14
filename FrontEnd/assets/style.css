@@ -462,9 +462,7 @@ a {
   cursor: pointer;
 }
 
-/* 
-@media screen and (min-height: 800px) {
-  .container {
-    margin: 1em 2em;
-  }
-} */
+#login button:hover {
+  color: #1d6154;
+  background-color: white;
+}
