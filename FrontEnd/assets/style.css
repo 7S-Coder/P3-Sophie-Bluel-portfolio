@@ -291,6 +291,18 @@ footer nav ul {
 }
 
 /* Mon CSS */
+
+header ul a {
+  list-style: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+header ul a,
+header ul a:hover {
+  text-decoration: none;
+}
+
 .btnDiv {
   display: flex;
   justify-content: center;
