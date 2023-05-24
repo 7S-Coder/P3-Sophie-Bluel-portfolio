@@ -32,7 +32,8 @@ function closeModal() {
   editButton.style.cursor = "pointer";
   initDivPhoto.innerHTML = "";
   data = "";
-  window.location.reload();
+  gallery.innerHTML = "";
+  init();
 }
 
 function openLastModal() {
@@ -341,8 +342,6 @@ addPicturesButton.addEventListener("click", () => {
   });
 
   validBtn.addEventListener("click", (e) => {
-    e.preventDefault();
-
     const formData = new FormData();
     formData.append("title", inputTitle.value);
     formData.append("image", file);
@@ -380,6 +379,8 @@ addPicturesButton.addEventListener("click", () => {
           "Une erreur s'est produite lors de l'upload de l'image." + error
         );
       });
+    data = "";
+    init();
   });
 });
 
@@ -515,7 +516,6 @@ function displayImage(e) {
   imageModal.appendChild(deleteButton);
 
   deleteButton.addEventListener("click", (e) => {
-    e.preventDefault();
     imageModal.innerHTML = "";
     initDivPhoto.style.display = "block";
 
