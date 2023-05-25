@@ -275,7 +275,6 @@ backOption.addEventListener("click", function () {
   initDivPhoto.innerHTML = "";
   initDivPhoto.style.display = "block";
   message.textContent = "";
-  // validBtn.removeEventListener("click");
 });
 
 const optionDiv = document.createElement("div");
@@ -376,6 +375,15 @@ addPicturesButton.addEventListener("click", (e) => {
             addPicturesForm.removeChild(message);
             message.textContent = "";
           }, 400);
+
+          //Réinitialiser le fichier
+          file = "";
+          photoDiv.innerHTML = "";
+          initDivPhoto.innerHTML = "";
+          initDivPhoto.style.display = "block";
+          displayInitDivPhoto();
+          //Réinitialisation du formulaire
+          addPicturesForm.reset();
         } else {
           console.error(
             "Une erreur s'est produite lors de l'upload de l'image."
