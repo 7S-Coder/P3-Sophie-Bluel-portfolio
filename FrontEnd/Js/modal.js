@@ -35,10 +35,19 @@ function closeModal() {
   gallery.innerHTML = "";
   divModal.innerHTML = "";
   message.textContent = "";
-  addPicturesForm.reset();
-  // validBtn.removeEventListener("click");
 
+  resetFormPicture();
   init();
+}
+
+function resetFormPicture() {
+  file = "";
+  photoDiv.innerHTML = "";
+  initDivPhoto.innerHTML = "";
+  initDivPhoto.style.display = "block";
+  displayInitDivPhoto();
+  //Réinitialisation du formulaire
+  addPicturesForm.reset();
 }
 
 function openLastModal() {
@@ -274,6 +283,12 @@ backOption.addEventListener("click", function () {
   initDivPhoto.innerHTML = "";
   initDivPhoto.style.display = "block";
   message.textContent = "";
+
+  //reset du modal
+  divModal.innerHTML = "";
+  openModal();
+  getAllPostsByCategory("Tous");
+  createModalPosts(data);
 });
 
 const optionDiv = document.createElement("div");
@@ -375,14 +390,7 @@ addPicturesButton.addEventListener("click", (e) => {
             message.textContent = "";
           }, 400);
 
-          //Réinitialiser le fichier
-          file = "";
-          photoDiv.innerHTML = "";
-          initDivPhoto.innerHTML = "";
-          initDivPhoto.style.display = "block";
-          displayInitDivPhoto();
-          //Réinitialisation du formulaire
-          addPicturesForm.reset();
+          resetFormPicture();
         } else {
           console.error(
             "Une erreur s'est produite lors de l'upload de l'image."
