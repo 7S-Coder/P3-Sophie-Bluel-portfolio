@@ -65,6 +65,7 @@ function createModalPosts(data) {
     divModal.style.borderBottom = "1px solid #B3B3B3";
     divModal.style.paddingBottom = "47px";
     divModal.style.height = "61%";
+    divModal.style.overflow = "auto";
 
     // Création d’une balise dédiée à un post
     postModal = document.createElement("figure");
@@ -168,9 +169,8 @@ function createModalPosts(data) {
               console.log(`La photo a bien été supprimée.`);
               message.style.color = "#1d6154";
               message.textContent = "La photo a bien été supprimée.";
-              modal.prepend(message);
+              divModal.insertAdjacentElement("afterend", message);
               setTimeout(() => {
-                modal.removeChild(message);
                 message.textContent = "";
               }, 1000);
 
@@ -205,9 +205,8 @@ function createModalPosts(data) {
                 console.log(`Toutes les photos ont été supprimées.`);
                 message.style.color = "#1d6154";
                 message.textContent = "Toutes les photos ont été supprimées.";
-                modal.prepend(message);
+                divModal.insertAdjacentElement("afterend", message);
                 setTimeout(() => {
-                  modal.removeChild(message);
                   message.textContent = "";
                 }, 1000);
                 postFigures.forEach((postFigure) => {
