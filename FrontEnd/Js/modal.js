@@ -33,6 +33,11 @@ function closeModal() {
   initDivPhoto.innerHTML = "";
   data = "";
   gallery.innerHTML = "";
+  divModal.innerHTML = "";
+  message.textContent = "";
+  addPicturesForm.reset();
+  // validBtn.removeEventListener("click");
+
   init();
 }
 
@@ -163,7 +168,7 @@ function createModalPosts(data) {
               console.log(`La photo a bien été supprimée.`);
               message.style.color = "#1d6154";
               message.textContent = "La photo a bien été supprimée.";
-              modal.appendChild(message);
+              modal.prepend(message);
               setTimeout(() => {
                 modal.removeChild(message);
                 message.textContent = "";
@@ -200,7 +205,7 @@ function createModalPosts(data) {
                 console.log(`Toutes les photos ont été supprimées.`);
                 message.style.color = "#1d6154";
                 message.textContent = "Toutes les photos ont été supprimées.";
-                modal.appendChild(message);
+                modal.prepend(message);
                 setTimeout(() => {
                   modal.removeChild(message);
                   message.textContent = "";
@@ -266,9 +271,11 @@ backOption.addEventListener("click", function () {
   modal.style.display = "block";
   modal2.style.display = "none";
   photoDiv.innerHTML = "";
+  addPicturesForm.reset();
   initDivPhoto.innerHTML = "";
   initDivPhoto.style.display = "block";
   message.textContent = "";
+  // validBtn.removeEventListener("click");
 });
 
 const optionDiv = document.createElement("div");
@@ -319,10 +326,12 @@ validBtn.style.height = "36px";
 validBtn.style.border = "none";
 validBtn.style.marginBottom = "55px";
 
-addPicturesButton.addEventListener("click", () => {
+addPicturesButton.addEventListener("click", (e) => {
+  e.preventDefault();
+
   addPicturesForm.innerHTML = "";
   openModal2();
-  addPicturesForm.addEventListener("change", (e) => {
+  addPicturesForm.addEventListener("change", () => {
     const inputs = addPicturesForm.querySelectorAll("input");
     let isFormComplete = true;
 
@@ -332,7 +341,6 @@ addPicturesButton.addEventListener("click", () => {
       }
     });
     if (isFormComplete) {
-      e.preventDefault();
       validBtn.classList.add("succes");
       validBtn.removeAttribute("disabled");
       validBtn.style.backgroundColor = "#1d6154";
@@ -342,6 +350,7 @@ addPicturesButton.addEventListener("click", () => {
   });
 
   validBtn.addEventListener("click", (e) => {
+    e.preventDefault();
     const formData = new FormData();
     formData.append("title", inputTitle.value);
     formData.append("image", file);
@@ -366,7 +375,6 @@ addPicturesButton.addEventListener("click", () => {
           setTimeout(() => {
             addPicturesForm.removeChild(message);
             message.textContent = "";
-            window.location.href = "index.html";
           }, 400);
         } else {
           console.error(
@@ -518,6 +526,7 @@ function displayImage(e) {
   deleteButton.addEventListener("click", (e) => {
     imageModal.innerHTML = "";
     initDivPhoto.style.display = "block";
+    file = "";
 
     photoDiv.appendChild(initDivPhoto);
   });

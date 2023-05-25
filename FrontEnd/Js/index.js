@@ -17,7 +17,6 @@ function init() {
       data = apiData;
       createPosts(data);
       categoryNames = [new Set(data.map((post) => post.category.name))];
-      allPosts = [data];
     })
     .catch((error) => {
       console.error(error);
