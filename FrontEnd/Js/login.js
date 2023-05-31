@@ -10,7 +10,8 @@ let categoryNames = [];
 
 let message = document.createElement("span");
 message.style.fontSize = "24px";
-message.style.paddingBottom = "5px";
+message.style.paddingBottom = "1px";
+message.style.marginTop = "2px";
 
 const login = ulNav.children[2];
 login.style.cursor = "pointer";
